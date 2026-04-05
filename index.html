@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
@@ -16,394 +17,410 @@ const { useState, useMemo } = React;
 
 // ============ BT PATHWAY MODELS ============
 const PATHWAYS = [
-  { id:"allman", label:"Allmänmedicin", emoji:"🏥", description:"Du startar direkt på din vårdcentral — primärvård är redan ett BT-mål, så du uppnår BT- och ST-mål samtidigt från dag ett.",
-    blocks: [
-      { label:"Primärvård (VC)", months:6, color:"#34D399", type:"bt+st", note:"Hemmaklinik — BT + ST samtidigt" },
-      { label:"Akut sjukvård", months:3, color:"#60A5FA", type:"bt", note:"Obligatorisk BT-placering" },
-      { label:"Valfri (t.ex. psykiatri)", months:3, color:"#A78BFA", type:"bt", note:"Kan ge BT-mål + ST-mål" },
-      { label:"Fortsatt ST — resterande ~4,5 år", months:null, color:"#94A3B8", type:"st", note:"Specialitetsspecifik tjänstgöring" },
-    ]},
-  { id:"kirurgi", label:"Sjukhusspecialitet", emoji:"🔪", description:"Din hemmaklinik räknas ofta som akut sjukvård. Du gör primärvård externt. De flesta regioner har psykiatri som standardplacering, plus en valfri.",
-    blocks: [
-      { label:"Hemmaklinik (akut sjukvård)", months:4, color:"#34D399", type:"bt+st", note:"BT akut + ST-tid" },
-      { label:"Primärvård", months:3, color:"#60A5FA", type:"bt", note:"Obligatorisk BT-placering" },
-      { label:"Psykiatri", months:2, color:"#818CF8", type:"bt", note:"Standard i de flesta regioner" },
-      { label:"Valfri (t.ex. palliativ)", months:2, color:"#F472B6", type:"bt", note:"Anpassas efter individ och region" },
-      { label:"Fortsatt ST — resterande ~4,5 år", months:null, color:"#94A3B8", type:"st", note:"Specialitetsspecifik tjänstgöring" },
-    ]},
-  { id:"psykiatri", label:"Psykiatri", emoji:"🧠", description:"Psykiatri är redan en vanlig BT-placering — du behöver bara akut sjukvård och primärvård externt.",
-    blocks: [
-      { label:"Psykiatri (hemmaklinik)", months:5, color:"#34D399", type:"bt+st", note:"BT + ST samtidigt" },
-      { label:"Akut sjukvård", months:3, color:"#60A5FA", type:"bt", note:"Obligatorisk" },
-      { label:"Primärvård", months:3, color:"#60A5FA", type:"bt", note:"Obligatorisk" },
-      { label:"Fortsatt ST — resterande ~4,5 år", months:null, color:"#94A3B8", type:"st", note:"Specialitetsspecifik tjänstgöring" },
-    ]},
-  { id:"diagnostisk", label:"Diagnostisk (t.ex. radiologi)", emoji:"📡", description:"Du börjar på röntgen/labb men behöver kliniska placeringar med patientkontakt. Tidigare vikariat kan tillgodoräknas.",
-    blocks: [
-      { label:"Diagnostisk klinik", months:3, color:"#34D399", type:"st", note:"Intro — ger ST-tid" },
-      { label:"Akut sjukvård", months:3, color:"#60A5FA", type:"bt", note:"Klinisk patientkontakt" },
-      { label:"Primärvård", months:3, color:"#60A5FA", type:"bt", note:"Obligatorisk" },
-      { label:"Valfri", months:2, color:"#A78BFA", type:"bt", note:"Kan tillgodoräknas" },
-      { label:"Fortsatt ST — resterande ~4,5 år", months:null, color:"#94A3B8", type:"st", note:"Specialitetsspecifik tjänstgöring" },
-    ]},
-  { id:"fristaende", label:"Fristående BT", emoji:"🔍", description:"Separat 12-månaderstjänst utan koppling till ST. Bra om du vill utforska specialiteter innan du väljer. Efter godkänd BT söker du ST separat — BT-tiden tillgodoräknas och ST blir ~4,5 år.",
-    blocks: [
-      { label:"Akut sjukvård", months:4, color:"#60A5FA", type:"bt", note:"Obligatoriskt, minst 3 mån" },
-      { label:"Primärvård", months:4, color:"#60A5FA", type:"bt", note:"Obligatoriskt, minst 3 mån" },
-      { label:"Psykiatri", months:2, color:"#818CF8", type:"bt", note:"Vanlig tredje placering" },
-      { label:"Valfri", months:2, color:"#F472B6", type:"bt", note:"Testa en specialitet" },
-      { label:"→ Sök ST → resterande ~4,5 år", months:null, color:"#94A3B8", type:"after", note:"BT-tiden tillgodoräknas i ST (totalt 5,5 år)" },
-    ]},
+{ id:“allman”, label:“Allmänmedicin”, emoji:“🏥”, description:“Du startar direkt på din vårdcentral — primärvård är redan ett BT-mål, så du uppnår BT- och ST-mål samtidigt från dag ett.”,
+blocks: [
+{ label:“Primärvård (VC)”, months:6, color:”#34D399”, type:“bt+st”, note:“Hemmaklinik — BT + ST samtidigt” },
+{ label:“Akut sjukvård”, months:3, color:”#60A5FA”, type:“bt”, note:“Obligatorisk BT-placering” },
+{ label:“Valfri (t.ex. psykiatri)”, months:3, color:”#A78BFA”, type:“bt”, note:“Kan ge BT-mål + ST-mål” },
+{ label:“Fortsatt ST — resterande ~4,5 år”, months:null, color:”#94A3B8”, type:“st”, note:“Specialitetsspecifik tjänstgöring” },
+]},
+{ id:“kirurgi”, label:“Sjukhusspecialitet”, emoji:“🔪”, description:“Din hemmaklinik räknas ofta som akut sjukvård. Du gör primärvård externt. De flesta regioner har psykiatri som standardplacering, plus en valfri.”,
+blocks: [
+{ label:“Hemmaklinik (akut sjukvård)”, months:4, color:”#34D399”, type:“bt+st”, note:“BT akut + ST-tid” },
+{ label:“Primärvård”, months:3, color:”#60A5FA”, type:“bt”, note:“Obligatorisk BT-placering” },
+{ label:“Psykiatri”, months:2, color:”#818CF8”, type:“bt”, note:“Standard i de flesta regioner” },
+{ label:“Valfri (t.ex. palliativ)”, months:2, color:”#F472B6”, type:“bt”, note:“Anpassas efter individ och region” },
+{ label:“Fortsatt ST — resterande ~4,5 år”, months:null, color:”#94A3B8”, type:“st”, note:“Specialitetsspecifik tjänstgöring” },
+]},
+{ id:“psykiatri”, label:“Psykiatri”, emoji:“🧠”, description:“Psykiatri är redan en vanlig BT-placering — du behöver bara akut sjukvård och primärvård externt.”,
+blocks: [
+{ label:“Psykiatri (hemmaklinik)”, months:5, color:”#34D399”, type:“bt+st”, note:“BT + ST samtidigt” },
+{ label:“Akut sjukvård”, months:3, color:”#60A5FA”, type:“bt”, note:“Obligatorisk” },
+{ label:“Primärvård”, months:3, color:”#60A5FA”, type:“bt”, note:“Obligatorisk” },
+{ label:“Fortsatt ST — resterande ~4,5 år”, months:null, color:”#94A3B8”, type:“st”, note:“Specialitetsspecifik tjänstgöring” },
+]},
+{ id:“diagnostisk”, label:“Diagnostisk (t.ex. radiologi)”, emoji:“📡”, description:“Du börjar på röntgen/labb men behöver kliniska placeringar med patientkontakt. Tidigare vikariat kan tillgodoräknas.”,
+blocks: [
+{ label:“Diagnostisk klinik”, months:3, color:”#34D399”, type:“st”, note:“Intro — ger ST-tid” },
+{ label:“Akut sjukvård”, months:3, color:”#60A5FA”, type:“bt”, note:“Klinisk patientkontakt” },
+{ label:“Primärvård”, months:3, color:”#60A5FA”, type:“bt”, note:“Obligatorisk” },
+{ label:“Valfri”, months:2, color:”#A78BFA”, type:“bt”, note:“Kan tillgodoräknas” },
+{ label:“Fortsatt ST — resterande ~4,5 år”, months:null, color:”#94A3B8”, type:“st”, note:“Specialitetsspecifik tjänstgöring” },
+]},
+{ id:“fristaende”, label:“Fristående BT”, emoji:“🔍”, description:“Separat 12-månaderstjänst utan koppling till ST. Bra om du vill utforska specialiteter innan du väljer. Efter godkänd BT söker du ST separat — BT-tiden tillgodoräknas och ST blir ~4,5 år.”,
+blocks: [
+{ label:“Akut sjukvård”, months:4, color:”#60A5FA”, type:“bt”, note:“Obligatoriskt, minst 3 mån” },
+{ label:“Primärvård”, months:4, color:”#60A5FA”, type:“bt”, note:“Obligatoriskt, minst 3 mån” },
+{ label:“Psykiatri”, months:2, color:”#818CF8”, type:“bt”, note:“Vanlig tredje placering” },
+{ label:“Valfri”, months:2, color:”#F472B6”, type:“bt”, note:“Testa en specialitet” },
+{ label:“→ Sök ST → resterande ~4,5 år”, months:null, color:”#94A3B8”, type:“after”, note:“BT-tiden tillgodoräknas i ST (totalt 5,5 år)” },
+]},
 ];
 
 function PathwayViz({ pathway }) {
-  var btBlocks = pathway.blocks.filter(function(b) { return b.months; });
-  var stBlock = pathway.blocks.find(function(b) { return !b.months; });
-  var totalBT = btBlocks.reduce(function(s, b) { return s + b.months; }, 0);
-  var isAfter = stBlock && stBlock.type === "after";
-  return (<div>
-    <p style={{ margin:"0 0 16px",fontSize:14,lineHeight:1.7,color:"#475569" }}>{pathway.description}</p>
-    <div style={{ marginBottom:16 }}>
-      <div style={{ display:"flex",borderRadius:8,overflow:"hidden",height:32 }}>
-        {btBlocks.map(function(b,i) { return (
-          <div key={i} style={{ flex:b.months,background:b.color,display:"flex",alignItems:"center",justifyContent:"center",borderRight:i < btBlocks.length-1 ? "2px solid rgba(255,255,255,0.3)" : "none" }}>
-            {b.months >= 3 ? <span style={{ fontSize:10,fontWeight:700,color:"#fff" }}>{b.months}m</span> : null}
-          </div>
-        ); })}
-        <div style={{ flex:totalBT*4,background: isAfter ? "#D1D5DB" : "#E2E8F0",display:"flex",alignItems:"center",justifyContent:"center",padding:"0 8px" }}>
-          <span style={{ fontSize:11,fontWeight:700,color:"#64748B",textAlign:"center" }}>{isAfter ? "Sök ST (BT-tid räknas in)" : "Fortsatt ST — resterande ~4,5 år"}</span>
-        </div>
-      </div>
-      <div style={{ display:"flex",justifyContent:"space-between",marginTop:4,fontSize:10,color:"#94A3B8" }}>
-        <span>Start</span>
-        <span>~1 år</span>
-        <span>~5,5 år</span>
-      </div>
-    </div>
-    <div style={{ fontSize:12,fontWeight:700,color:"#64748B",textTransform:"uppercase",letterSpacing:1,marginBottom:8 }}>BT-placeringar (ordningen kan variera):</div>
-    <div style={{ display:"flex",flexWrap:"wrap",gap:8 }}>
-      {btBlocks.map(function(b,i) { return (
-        <div key={i} style={{ flex:"1 1 140px",minWidth:130,padding:"12px 14px",borderRadius:10,background:b.color+"12",borderLeft:"4px solid "+b.color }}>
-          <div style={{ display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:4 }}>
-            <div style={{ fontSize:13,fontWeight:700,color:"#1A202C",lineHeight:1.3 }}>{b.label}</div>
-            {b.type==="bt+st" ? <span style={{ fontSize:8,fontWeight:800,color:"#059669",background:"#ECFDF5",padding:"2px 5px",borderRadius:3,flexShrink:0,whiteSpace:"nowrap" }}>BT+ST</span> : null}
-          </div>
-          <div style={{ fontSize:12,color:b.color,fontWeight:700,marginTop:4 }}>{b.months} månader</div>
-          <div style={{ fontSize:11,color:"#64748B",marginTop:2,lineHeight:1.4 }}>{b.note}</div>
-        </div>
-      ); })}
-    </div>
-    <div style={{ display:"flex",gap:14,flexWrap:"wrap",marginTop:14 }}>
-      <div style={{ display:"flex",alignItems:"center",gap:5,fontSize:11,color:"#64748B" }}><span style={{ width:10,height:10,borderRadius:3,background:"#60A5FA" }}/>Obligatorisk BT</div>
-      <div style={{ display:"flex",alignItems:"center",gap:5,fontSize:11,color:"#64748B" }}><span style={{ width:10,height:10,borderRadius:3,background:"#34D399" }}/>BT + ST samtidigt</div>
-      <div style={{ display:"flex",alignItems:"center",gap:5,fontSize:11,color:"#64748B" }}><span style={{ width:10,height:10,borderRadius:3,background:"#818CF8" }}/>Psykiatri</div>
-      <div style={{ display:"flex",alignItems:"center",gap:5,fontSize:11,color:"#64748B" }}><span style={{ width:10,height:10,borderRadius:3,background:"#F472B6" }}/>Valfri placering</div>
-    </div>
-    <div style={{ marginTop:8,fontSize:12,color:"#94A3B8",fontStyle:"italic" }}>
-      ↔ Ordningen kan variera mellan regioner och individer.
-    </div>
+var btBlocks = pathway.blocks.filter(function(b) { return b.months; });
+var stBlock = pathway.blocks.find(function(b) { return !b.months; });
+var totalBT = btBlocks.reduce(function(s, b) { return s + b.months; }, 0);
+var isAfter = stBlock && stBlock.type === “after”;
+return (<div>
+<p style={{ margin:“0 0 16px”,fontSize:14,lineHeight:1.7,color:”#475569” }}>{pathway.description}</p>
+<div style={{ marginBottom:16 }}>
+<div style={{ display:“flex”,borderRadius:8,overflow:“hidden”,height:32 }}>
+{btBlocks.map(function(b,i) { return (
+<div key={i} style={{ flex:b.months,background:b.color,display:“flex”,alignItems:“center”,justifyContent:“center”,borderRight:i < btBlocks.length-1 ? “2px solid rgba(255,255,255,0.3)” : “none” }}>
+{b.months >= 3 ? <span style={{ fontSize:10,fontWeight:700,color:”#fff” }}>{b.months}m</span> : null}
+</div>
+); })}
+<div style={{ flex:totalBT*4,background: isAfter ? “#D1D5DB” : “#E2E8F0”,display:“flex”,alignItems:“center”,justifyContent:“center”,padding:“0 8px” }}>
+<span style={{ fontSize:11,fontWeight:700,color:”#64748B”,textAlign:“center” }}>{isAfter ? “Sök ST (BT-tid räknas in)” : “Fortsatt ST — resterande ~4,5 år”}</span>
+</div>
+</div>
+<div style={{ display:“flex”,justifyContent:“space-between”,marginTop:4,fontSize:10,color:”#94A3B8” }}>
+<span>Start</span>
+<span>~1 år</span>
+<span>~5,5 år</span>
+</div>
+</div>
+<div style={{ fontSize:12,fontWeight:700,color:”#64748B”,textTransform:“uppercase”,letterSpacing:1,marginBottom:8 }}>BT-placeringar (ordningen kan variera):</div>
+<div style={{ display:“flex”,flexWrap:“wrap”,gap:8 }}>
+{btBlocks.map(function(b,i) { return (
+<div key={i} style={{ flex:“1 1 140px”,minWidth:130,padding:“12px 14px”,borderRadius:10,background:b.color+“12”,borderLeft:“4px solid “+b.color }}>
+<div style={{ display:“flex”,justifyContent:“space-between”,alignItems:“flex-start”,gap:4 }}>
+<div style={{ fontSize:13,fontWeight:700,color:”#1A202C”,lineHeight:1.3 }}>{b.label}</div>
+{b.type===“bt+st” ? <span style={{ fontSize:8,fontWeight:800,color:”#059669”,background:”#ECFDF5”,padding:“2px 5px”,borderRadius:3,flexShrink:0,whiteSpace:“nowrap” }}>BT+ST</span> : null}
+</div>
+<div style={{ fontSize:12,color:b.color,fontWeight:700,marginTop:4 }}>{b.months} månader</div>
+<div style={{ fontSize:11,color:”#64748B”,marginTop:2,lineHeight:1.4 }}>{b.note}</div>
+</div>
+); })}
+</div>
+<div style={{ display:“flex”,gap:14,flexWrap:“wrap”,marginTop:14 }}>
+<div style={{ display:“flex”,alignItems:“center”,gap:5,fontSize:11,color:”#64748B” }}><span style={{ width:10,height:10,borderRadius:3,background:”#60A5FA” }}/>Obligatorisk BT</div>
+<div style={{ display:“flex”,alignItems:“center”,gap:5,fontSize:11,color:”#64748B” }}><span style={{ width:10,height:10,borderRadius:3,background:”#34D399” }}/>BT + ST samtidigt</div>
+<div style={{ display:“flex”,alignItems:“center”,gap:5,fontSize:11,color:”#64748B” }}><span style={{ width:10,height:10,borderRadius:3,background:”#818CF8” }}/>Psykiatri</div>
+<div style={{ display:“flex”,alignItems:“center”,gap:5,fontSize:11,color:”#64748B” }}><span style={{ width:10,height:10,borderRadius:3,background:”#F472B6” }}/>Valfri placering</div>
+</div>
+<div style={{ marginTop:8,fontSize:12,color:”#94A3B8”,fontStyle:“italic” }}>
+↔ Ordningen kan variera mellan regioner och individer.
+</div>
+
   </div>);
 }
 
 function BTModelsSection() {
-  var _sel = useState("allman");
-  var sel = _sel[0];
-  var setSel = _sel[1];
-  var cur = PATHWAYS.find(function(p) { return p.id === sel; });
-  return (<div style={{ background:"#fff",borderRadius:16,border:"1px solid #E2E8F0",padding:"28px",marginBottom:24,boxShadow:"0 1px 4px rgba(0,0,0,0.04)" }}>
-    <div style={{ display:"flex",alignItems:"center",gap:10,marginBottom:6 }}>
-      <span style={{fontSize:22}}>🗺️</span>
-      <h2 style={{ margin:0,fontSize:20,fontWeight:800,color:"#0F172A" }}>Hur ser BT ut för din specialitet?</h2>
-    </div>
-    <p style={{ margin:"0 0 20px",fontSize:14,color:"#64748B",lineHeight:1.6 }}>BT anpassas efter din specialitet. Vid integrerad BT kan BT-mål och ST-mål uppnås samtidigt. Välj en inriktning:</p>
-    <div style={{ display:"flex",gap:8,flexWrap:"wrap",marginBottom:20 }}>
-      {PATHWAYS.map(function(p) { return (
-        <button key={p.id} onClick={function() { setSel(p.id); }} style={{ padding:"8px 16px",borderRadius:10,border: sel===p.id ? "2px solid #3B82F6" : "1.5px solid #E2E8F0",background: sel===p.id ? "#EFF6FF" : "#fff",fontSize:13,fontWeight:600,color: sel===p.id ? "#1D4ED8" : "#64748B",cursor:"pointer" }}>
-          {p.emoji} {p.label}
-        </button>
-      ); })}
-    </div>
-    {cur ? <PathwayViz pathway={cur}/> : null}
-    <div style={{ marginTop:20,padding:"12px 16px",borderRadius:10,background:"#F0FDF4",border:"1px solid #BBF7D0",fontSize:13,color:"#166534",lineHeight:1.6 }}>
-      <strong>Kom ihåg:</strong> All tjänstgöring efter legitimation kan tillgodoräknas i ST. BT-mål ska uppnås inom 2 år vid integrerad BT. Baskompetensbevis söks hos Socialstyrelsen när alla 18 delmål är uppfyllda.
-    </div>
-    <div style={{ marginTop:10,fontSize:11,color:"#94A3B8" }}>Modellerna är inspirerade av SYLF:s (Sveriges Yngre Läkares Förening) BT-modeller och Socialstyrelsens regelverk (HSLF-FS 2021:8). Visualiseringarna är våra egna.</div>
+var _sel = useState(“allman”);
+var sel = _sel[0];
+var setSel = _sel[1];
+var cur = PATHWAYS.find(function(p) { return p.id === sel; });
+return (<div style={{ background:”#fff”,borderRadius:16,border:“1px solid #E2E8F0”,padding:“28px”,marginBottom:24,boxShadow:“0 1px 4px rgba(0,0,0,0.04)” }}>
+<div style={{ display:“flex”,alignItems:“center”,gap:10,marginBottom:6 }}>
+<span style={{fontSize:22}}>🗺️</span>
+<h2 style={{ margin:0,fontSize:20,fontWeight:800,color:”#0F172A” }}>Hur ser BT ut för din specialitet?</h2>
+</div>
+<p style={{ margin:“0 0 20px”,fontSize:14,color:”#64748B”,lineHeight:1.6 }}>BT anpassas efter din specialitet. Vid integrerad BT kan BT-mål och ST-mål uppnås samtidigt. Välj en inriktning:</p>
+<div style={{ display:“flex”,gap:8,flexWrap:“wrap”,marginBottom:20 }}>
+{PATHWAYS.map(function(p) { return (
+<button key={p.id} onClick={function() { setSel(p.id); }} style={{ padding:“8px 16px”,borderRadius:10,border: sel===p.id ? “2px solid #3B82F6” : “1.5px solid #E2E8F0”,background: sel===p.id ? “#EFF6FF” : “#fff”,fontSize:13,fontWeight:600,color: sel===p.id ? “#1D4ED8” : “#64748B”,cursor:“pointer” }}>
+{p.emoji} {p.label}
+</button>
+); })}
+</div>
+{cur ? <PathwayViz pathway={cur}/> : null}
+<div style={{ marginTop:20,padding:“12px 16px”,borderRadius:10,background:”#F0FDF4”,border:“1px solid #BBF7D0”,fontSize:13,color:”#166534”,lineHeight:1.6 }}>
+<strong>Kom ihåg:</strong> All tjänstgöring efter legitimation kan tillgodoräknas i ST. BT-mål ska uppnås inom 2 år vid integrerad BT. Baskompetensbevis söks hos Socialstyrelsen när alla 18 delmål är uppfyllda.
+</div>
+<div style={{ marginTop:10,fontSize:11,color:”#94A3B8” }}>Modellerna är inspirerade av SYLF:s (Sveriges Yngre Läkares Förening) BT-modeller och Socialstyrelsens regelverk (HSLF-FS 2021:8). Visualiseringarna är våra egna.</div>
+
   </div>);
 }
 
 // ============ REGIONS DATA ============
-const TYPE_COLORS = { "Fristående":"#FB923C", "Integrerad":"#34D399", "Forskar-BT":"#A78BFA" };
+const TYPE_COLORS = { “Fristående”:”#FB923C”, “Integrerad”:”#34D399”, “Forskar-BT”:”#A78BFA” };
 
 const REGIONS = [
-  { id:"stockholm", name:"Stockholm", pop:"2.4 milj", btTypes:["Fristående","Integrerad"], slotsNow:"~20/omgång (2 ggr/år)", slots2027:"Upp till 64/år (beslut taget)", hospitals:["Karolinska Huddinge","Karolinska Solna","Södersjukhuset","Danderyds sjukhus","S:t Görans sjukhus","Södertälje sjukhus","Norrtälje sjukhus","Vårdcentraler via SLSO"], placements:"Akut sjukvård, primärvård, psykiatri", recruitNow:"2 ggr/år: dec–jan (vår) och juni–juli (höst)", recruit2027:"Ännu ej publicerat", duration:"12 mån", contact:"slso.regionstockholm.se", source:"SLSO, Vårdgivarguiden", notes:"Fristående BT via SLSO. Integrerad BT söks direkt hos kliniken. Utökning till 64 platser/år beslutad.", perks:[], sponsored:true,
-    nearby:[
-      { region:"Uppsala", direction:"norr", time:"~1 timme", highlight:"Akademiska sjukhuset — universitetssjukhus med 4v strukturerad intro" },
-      { region:"Sörmland", direction:"söder", time:"~1 timme", highlight:"Nyköpings lasarett och Mälarsjukhuset Eskilstuna — integrerad BT i ST" },
-      { region:"Östergötland", direction:"sydväst", time:"~2 timmar", highlight:"Universitetssjukhuset Linköping — fristående + integrerad BT" },
-    ]},
-  { id:"skane", name:"Skåne", pop:"1.4 milj", btTypes:["Fristående"], slotsNow:"30/år (15 vår + 15 höst)", slots2027:"240–300/år (planeras)", hospitals:["SUS Lund","SUS Malmö","Helsingborgs lasarett","Ängelholms sjukhus","Kristianstads sjukhus","Hässleholms sjukhus","Ystads lasarett","Trelleborgs lasarett","Landskrona lasarett"], placements:"Sjukhussomatik (akut), psykiatri, primärvård (3–4 block)", recruitNow:"Nästa: 20 apr – 3 maj 2026. Intervjuer 2–4 juni i Lund.", recruit2027:"Första rekryteringen för nyexaminerade väntas mars/april 2027.", duration:"12 mån", contact:"skane.se/bt", source:"Region Skåne, Sonden", notes:"Från 2027 decentraliseras rekrytering till sjukhusförvaltningarna.", perks:[], sponsored:true,
-    nearby:[
-      { region:"Halland", direction:"norr", time:"~1 timme", highlight:"Hallands sjukhus Halmstad — fristående BT, höga kvalitetskrav" },
-      { region:"Blekinge", direction:"öster", time:"~1,5 timmar", highlight:"Blekingesjukhuset Karlskrona — 4 fristående BT-platser" },
-      { region:"Jönköping", direction:"norr", time:"~2 timmar", highlight:"Ryhov, Eksjö, Värnamo — integrerad BT" },
-    ]},
-  { id:"vgr", name:"Västra Götaland", pop:"1.7 milj", btTypes:["Fristående","Integrerad","Forskar-BT"], slotsNow:"40 fristående (2026)", slots2027:"Upptrappning väntas", hospitals:["Sahlgrenska Universitetssjukhuset","NU-sjukvården (Trollhättan/Uddevalla)","SÄS Borås","Skaraborgs sjukhus","Sjukhusen i Väster (Alingsås/Kungälv)","Närhälsan (primärvård)"], placements:"Akut sjukvård, primärvård, psykiatri", recruitNow:"Annons v.16–18, start sep 2026", recruit2027:"Ej publicerat", duration:"12 mån", contact:"vgregion.se/bt", source:"VGR Akademin", notes:"Forskar-BT på Sahlgrenska. PLUS-program. AT kvar till ~2030.", perks:[], sponsored:false,
-    nearby:[
-      { region:"Halland", direction:"söder", time:"~1 timme", highlight:"Hallands sjukhus Varberg/Halmstad — fristående BT" },
-      { region:"Värmland", direction:"nordöst", time:"~2 timmar", highlight:"Centralsjukhuset Karlstad — integrerad BT" },
-      { region:"Jönköping", direction:"öster", time:"~1,5 timmar", highlight:"Ryhov — integrerad BT, stark handledartradition" },
-    ]},
-  { id:"ostergotland", name:"Östergötland", pop:"470 000", btTypes:["Fristående","Integrerad"], slotsNow:"4 fristående + integrerad", slots2027:"Ej specificerat", hospitals:["Universitetssjukhuset Linköping","Vrinnevisjukhuset Norrköping","Vårdcentraler"], placements:"Akut sjukvård, primärvård, psykiatri", recruitNow:"Annonseras bland lediga jobb", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Sara Kinert 010-103 05 93", source:"regionostergotland.se", notes:"Start april och november.", perks:[], sponsored:false,
-    nearby:[
-      { region:"Sörmland", direction:"norr", time:"~1 timme", highlight:"Nyköpings lasarett — integrerad BT" },
-      { region:"Jönköping", direction:"väster", time:"~1,5 timmar", highlight:"Ryhov — integrerad BT" },
-      { region:"Kalmar", direction:"sydöst", time:"~2 timmar", highlight:"Länssjukhuset Kalmar — integrerad BT" },
-    ]},
-  { id:"uppsala", name:"Uppsala", pop:"400 000", btTypes:["Fristående"], slotsNow:"Ej specificerat", slots2027:"Ej specificerat", hospitals:["Akademiska sjukhuset","BT-vårdcentraler i Uppsala län"], placements:"4v intro + primärvård + akut sjukvård + psykiatri", recruitNow:"2 ggr/år: v.6–8 och v.37–39", recruit2027:"Ej publicerat", duration:"12 mån", contact:"bt-enheten@regionuppsala.se", source:"akademiska.se", notes:"4 veckors strukturerad intro. Central BT-enhet.", perks:[], sponsored:false,
-    nearby:[
-      { region:"Stockholm", direction:"söder", time:"~1 timme", highlight:"SLSO regionala BT-programmet — upp till 64 platser/år 2027" },
-      { region:"Dalarna", direction:"nordväst", time:"~2 timmar", highlight:"Falu lasarett — 12–24 fristående BT/år" },
-      { region:"Sörmland", direction:"sydväst", time:"~1,5 timmar", highlight:"Mälarsjukhuset Eskilstuna — integrerad BT" },
-    ]},
-  { id:"norrbotten", name:"Norrbotten", pop:"250 000", btTypes:["Fristående"], slotsNow:"Varierar", slots2027:"Ej specificerat", hospitals:["Sunderby sjukhus (Luleå)","Piteå sjukhus","Kalix sjukhus","Gällivare sjukhus","Kiruna sjukhus"], placements:"Akut sjukvård, primärvård, psykiatri + jour", recruitNow:"Löpande", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Eva Vinsa 0980-730 11", source:"vardgivarwebben.norrbotten.se", notes:"Välj fjällen eller kusten. Boende + pendling ingår.", perks:["Boende ingår","Pendlingsersättning"], sponsored:false,
-    nearby:[
-      { region:"Västerbotten", direction:"söder", time:"~3 timmar", highlight:"Norrlands universitetssjukhus (NUS) i Umeå" },
-    ]},
-  { id:"orebro", name:"Örebro", pop:"310 000", btTypes:["Fristående","Integrerad"], slotsNow:"~20 fristående + 10 integrerade", slots2027:"Breddinförande planeras", hospitals:["Universitetssjukhuset Örebro","Primärvård + psykiatri"], placements:"Primärvård, akut, psykiatri + valfri", recruitNow:"2 ggr/år", recruit2027:"Omstrukturering 2027", duration:"12 mån", contact:"Utbildningscentrum Örebro", source:"vardgivare.regionorebrolan.se", notes:"Klinik-BT = integrerad. Valfri placering möjlig.", perks:[], sponsored:false,
-    nearby:[
-      { region:"Dalarna", direction:"norr", time:"~1,5 timmar", highlight:"Falu lasarett — 12–24 BT/år" },
-      { region:"Sörmland", direction:"öster", time:"~1,5 timmar", highlight:"Mälarsjukhuset Eskilstuna — integrerad BT" },
-      { region:"Värmland", direction:"väster", time:"~2 timmar", highlight:"Centralsjukhuset Karlstad — integrerad BT" },
-    ]},
-  { id:"halland", name:"Halland", pop:"340 000", btTypes:["Fristående"], slotsNow:"2/omgång", slots2027:"Ej specificerat", hospitals:["Hallands sjukhus Halmstad","Hallands sjukhus Varberg"], placements:"Akut, primärvård, psykiatri", recruitNow:"Löpande", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Hallands sjukhus", source:"regionhalland.se", notes:"Inga tillgodoräknanden — kvalitet prioriteras.", perks:[], sponsored:false,
-    nearby:[
-      { region:"Västra Götaland", direction:"norr", time:"~1 timme", highlight:"Sahlgrenska + 5 andra sjukhus — 40 fristående BT" },
-      { region:"Skåne", direction:"söder", time:"~1 timme", highlight:"SUS Lund/Malmö — 240–300 platser planeras 2027" },
-    ]},
-  { id:"dalarna", name:"Dalarna", pop:"290 000", btTypes:["Fristående"], slotsNow:"12–24/år", slots2027:"Ej specificerat", hospitals:["Falu lasarett","Mora lasarett"], placements:"Akut, primärvård, psykiatri", recruitNow:"Löpande", recruit2027:"Ej publicerat", duration:"12 mån", contact:"BT-studierektor Dalarna", source:"Läkartidningen", notes:"Bland flest BT per invånare i landet.", perks:[], sponsored:false,
-    nearby:[
-      { region:"Uppsala", direction:"sydöst", time:"~2 timmar", highlight:"Akademiska sjukhuset — fristående BT" },
-      { region:"Örebro", direction:"söder", time:"~1,5 timmar", highlight:"USÖ — fristående + integrerad BT" },
-    ]},
-  { id:"blekinge", name:"Blekinge", pop:"160 000", btTypes:["Fristående"], slotsNow:"4", slots2027:"Ej specificerat", hospitals:["Blekingesjukhuset Karlskrona"], placements:"Primärvård, akut, psykiatri", recruitNow:"Löpande", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Region Blekinge", source:"Region Blekinge", notes:null, perks:[], sponsored:false,
-    nearby:[
-      { region:"Skåne", direction:"väster", time:"~1,5 timmar", highlight:"SUS + 6 andra sjukhus" },
-      { region:"Kalmar", direction:"norr", time:"~2 timmar", highlight:"Länssjukhuset Kalmar — integrerad BT" },
-    ]},
-  { id:"vasternorrland", name:"Västernorrland", pop:"245 000", btTypes:["Fristående"], slotsNow:"6–9/år", slots2027:"Ej specificerat", hospitals:["Sundsvalls sjukhus","Örnsköldsviks sjukhus","Sollefteå sjukhus"], placements:"Akut, primärvård, psykiatri", recruitNow:"Löpande", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Region Västernorrland", source:"Region Västernorrland", notes:null, perks:["5 000 kr/mån extra"], sponsored:false,
-    nearby:[
-      { region:"Norrbotten", direction:"norr", time:"~3 timmar", highlight:"5 sjukhus — boende + pendling ingår" },
-    ]},
-  { id:"kalmar", name:"Kalmar", pop:"250 000", btTypes:["Integrerad"], slotsNow:"Behovsanpassat", slots2027:"Fristående kan tillkomma", hospitals:["Länssjukhuset Kalmar","Västerviks sjukhus","Oskarshamns sjukhus"], placements:"Akut, primärvård, psykiatri", recruitNow:"Verksamheterna rekryterar", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Region Kalmar", source:"regionkalmar.se", notes:"Enbart integrerad BT till 2027.", perks:[], sponsored:false,
-    nearby:[
-      { region:"Östergötland", direction:"norr", time:"~2 timmar", highlight:"US Linköping — fristående + integrerad BT" },
-      { region:"Blekinge", direction:"söder", time:"~2 timmar", highlight:"Blekingesjukhuset — 4 fristående BT" },
-    ]},
-  { id:"jonkoping", name:"Jönköping", pop:"370 000", btTypes:["Integrerad"], slotsNow:"Behovsanpassat", slots2027:"Fristående kan tillkomma", hospitals:["Länssjukhuset Ryhov","Höglandssjukhuset Eksjö","Värnamo sjukhus"], placements:"Akut, primärvård, psykiatri", recruitNow:"Sök ST direkt", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Region Jönköping", source:"Läkartidningen", notes:null, perks:[], sponsored:false,
-    nearby:[
-      { region:"Östergötland", direction:"öster", time:"~1,5 timmar", highlight:"US Linköping — fristående + integrerad" },
-      { region:"Västra Götaland", direction:"väster", time:"~1,5 timmar", highlight:"Sahlgrenska + 5 sjukhus — 40 BT 2026" },
-      { region:"Skåne", direction:"söder", time:"~2 timmar", highlight:"240–300 BT-platser planeras 2027" },
-    ]},
-  { id:"varmland", name:"Värmland", pop:"285 000", btTypes:["Integrerad"], slotsNow:"Behovsanpassat", slots2027:"Ej specificerat", hospitals:["Centralsjukhuset Karlstad","Torsby sjukhus"], placements:"Akut, primärvård, psykiatri", recruitNow:"Sök ST direkt", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Region Värmland", source:"Läkartidningen", notes:null, perks:[], sponsored:false,
-    nearby:[
-      { region:"Örebro", direction:"öster", time:"~2 timmar", highlight:"USÖ — fristående + integrerad BT" },
-      { region:"Västra Götaland", direction:"söder", time:"~2 timmar", highlight:"Sahlgrenska + 5 sjukhus" },
-    ]},
-  { id:"sormland", name:"Sörmland", pop:"300 000", btTypes:["Integrerad"], slotsNow:"Behovsanpassat", slots2027:"Ej specificerat", hospitals:["Mälarsjukhuset Eskilstuna","Nyköpings lasarett","Kullbergska sjukhuset"], placements:"Akut, primärvård, psykiatri", recruitNow:"BT förutsätter ST-anställning", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Region Sörmland", source:"Läkartidningen", notes:null, perks:[], sponsored:false,
-    nearby:[
-      { region:"Stockholm", direction:"norr", time:"~1 timme", highlight:"SLSO — upp till 64 BT/år 2027" },
-      { region:"Östergötland", direction:"söder", time:"~1 timme", highlight:"US Linköping — fristående + integrerad" },
-      { region:"Uppsala", direction:"nordväst", time:"~1,5 timmar", highlight:"Akademiska — fristående BT" },
-    ]},
+{ id:“stockholm”, name:“Stockholm”, pop:“2.4 milj”, btTypes:[“Fristående”,“Integrerad”], slotsNow:“~20/omgång (2 ggr/år)”, slots2027:“Upp till 64/år (beslut taget)”, hospitals:[“Karolinska Huddinge”,“Karolinska Solna”,“Södersjukhuset”,“Danderyds sjukhus”,“S:t Görans sjukhus”,“Södertälje sjukhus”,“Norrtälje sjukhus”,“Vårdcentraler via SLSO”], placements:“Akut sjukvård, primärvård, psykiatri”, recruitNow:“2 ggr/år: dec–jan (vår) och juni–juli (höst)”, recruit2027:“Ännu ej publicerat”, duration:“12 mån”, contact:“slso.regionstockholm.se”, source:“SLSO, Vårdgivarguiden”, notes:“Fristående BT via SLSO. Integrerad BT söks direkt hos kliniken. Utökning till 64 platser/år beslutad.”, perks:[], sponsored:true,
+nearby:[
+{ region:“Uppsala”, direction:“norr”, time:“~1 timme”, highlight:“Akademiska sjukhuset — universitetssjukhus med 4v strukturerad intro” },
+{ region:“Sörmland”, direction:“söder”, time:“~1 timme”, highlight:“Nyköpings lasarett och Mälarsjukhuset Eskilstuna — integrerad BT i ST” },
+{ region:“Östergötland”, direction:“sydväst”, time:“~2 timmar”, highlight:“Universitetssjukhuset Linköping — fristående + integrerad BT” },
+]},
+{ id:“skane”, name:“Skåne”, pop:“1.4 milj”, btTypes:[“Fristående”], slotsNow:“30/år (15 vår + 15 höst)”, slots2027:“240–300/år (enl. uppskattningar, ej fastställt)”, hospitals:[“SUS Lund”,“SUS Malmö”,“Helsingborgs lasarett”,“Ängelholms sjukhus”,“Kristianstads sjukhus”,“Hässleholms sjukhus”,“Ystads lasarett”,“Trelleborgs lasarett”,“Landskrona lasarett”], placements:“Sjukhussomatik (akut), psykiatri, primärvård (3–4 block)”, recruitNow:“Nästa: 20 apr – 3 maj 2026. Intervjuer 2–4 juni i Lund.”, recruit2027:“Första rekryteringen för nyexaminerade väntas mars/april 2027.”, duration:“12 mån”, contact:“skane.se/bt”, source:“Region Skåne, Sonden”, notes:“Från 2027 decentraliseras rekrytering till sjukhusförvaltningarna.”, perks:[], sponsored:true,
+nearby:[
+{ region:“Halland”, direction:“norr”, time:“~1 timme”, highlight:“Hallands sjukhus Halmstad — fristående BT, höga kvalitetskrav” },
+{ region:“Blekinge”, direction:“öster”, time:“~1,5 timmar”, highlight:“Blekingesjukhuset Karlskrona — 4 fristående BT-platser” },
+{ region:“Jönköping”, direction:“norr”, time:“~2 timmar”, highlight:“Ryhov, Eksjö, Värnamo — integrerad BT” },
+]},
+{ id:“vgr”, name:“Västra Götaland”, pop:“1.7 milj”, btTypes:[“Fristående”,“Integrerad”,“Forskar-BT”], slotsNow:“40 fristående (2026)”, slots2027:“Upptrappning väntas, ej specificerat”, hospitals:[“Sahlgrenska Universitetssjukhuset”,“NU-sjukvården (Trollhättan/Uddevalla)”,“SÄS Borås”,“Skaraborgs sjukhus”,“Sjukhusen i Väster (Alingsås/Kungälv)”,“Närhälsan (primärvård)”], placements:“Akut sjukvård, primärvård, psykiatri”, recruitNow:“Annons v.16–18, start sep 2026”, recruit2027:“Ej publicerat”, duration:“12 mån”, contact:“vgregion.se/bt”, source:“VGR Akademin”, notes:“Forskar-BT på Sahlgrenska. PLUS-program. AT kvar till ~2030.”, perks:[], sponsored:false,
+nearby:[
+{ region:“Halland”, direction:“söder”, time:“~1 timme”, highlight:“Hallands sjukhus Varberg/Halmstad — fristående BT” },
+{ region:“Värmland”, direction:“nordöst”, time:“~2 timmar”, highlight:“Centralsjukhuset Karlstad — integrerad BT” },
+{ region:“Jönköping”, direction:“öster”, time:“~1,5 timmar”, highlight:“Ryhov — integrerad BT, stark handledartradition” },
+]},
+{ id:“ostergotland”, name:“Östergötland”, pop:“470 000”, btTypes:[“Fristående”,“Integrerad”], slotsNow:“4 fristående + integrerad”, slots2027:“Ej specificerat”, hospitals:[“Universitetssjukhuset Linköping”,“Vrinnevisjukhuset Norrköping”,“Vårdcentraler”], placements:“Akut sjukvård, primärvård, psykiatri”, recruitNow:“Annonseras bland lediga jobb”, recruit2027:“Ej publicerat”, duration:“12 mån”, contact:“Region Östergötland (BT-kansliet)”, source:“regionostergotland.se”, notes:“Start april och november.”, perks:[], sponsored:false,
+nearby:[
+{ region:“Sörmland”, direction:“norr”, time:“~1 timme”, highlight:“Nyköpings lasarett — integrerad BT” },
+{ region:“Jönköping”, direction:“väster”, time:“~1,5 timmar”, highlight:“Ryhov — integrerad BT” },
+{ region:“Kalmar”, direction:“sydöst”, time:“~2 timmar”, highlight:“Länssjukhuset Kalmar — integrerad BT” },
+]},
+{ id:“uppsala”, name:“Uppsala”, pop:“400 000”, btTypes:[“Fristående”], slotsNow:“Ej specificerat”, slots2027:“Ej specificerat”, hospitals:[“Akademiska sjukhuset”,“BT-vårdcentraler i Uppsala län”], placements:“4v intro + primärvård + akut sjukvård + psykiatri”, recruitNow:“2 ggr/år: v.6–8 och v.37–39”, recruit2027:“Ej publicerat”, duration:“12 mån”, contact:“Region Uppsala (BT-enheten)”, source:“akademiska.se”, notes:“4 veckors strukturerad intro. Central BT-enhet.”, perks:[], sponsored:false,
+nearby:[
+{ region:“Stockholm”, direction:“söder”, time:“~1 timme”, highlight:“SLSO regionala BT-programmet — upp till 64 platser/år 2027” },
+{ region:“Dalarna”, direction:“nordväst”, time:“~2 timmar”, highlight:“Falu lasarett — 12–24 fristående BT/år” },
+{ region:“Sörmland”, direction:“sydväst”, time:“~1,5 timmar”, highlight:“Mälarsjukhuset Eskilstuna — integrerad BT” },
+]},
+{ id:“norrbotten”, name:“Norrbotten”, pop:“250 000”, btTypes:[“Fristående”], slotsNow:“Varierar”, slots2027:“Ej specificerat”, hospitals:[“Sunderby sjukhus (Luleå)”,“Piteå sjukhus”,“Kalix sjukhus”,“Gällivare sjukhus”,“Kiruna sjukhus”], placements:“Akut sjukvård, primärvård, psykiatri + jour”, recruitNow:“Löpande”, recruit2027:“Ej publicerat”, duration:“12 mån”, contact:“Region Norrbotten (AT/BT-kansliet)”, source:“vardgivarwebben.norrbotten.se”, notes:“Välj fjällen eller kusten. Boende + pendling ingår.”, perks:[“Boende ingår”,“Pendlingsersättning”], sponsored:false,
+nearby:[
+{ region:“Västerbotten”, direction:“söder”, time:“~3 timmar”, highlight:“Norrlands universitetssjukhus (NUS) i Umeå” },
+]},
+{ id:“orebro”, name:“Örebro”, pop:“310 000”, btTypes:[“Fristående”,“Integrerad”], slotsNow:“~20 fristående + 10 integrerade”, slots2027:“Breddinförande planeras”, hospitals:[“Universitetssjukhuset Örebro”,“Primärvård + psykiatri”], placements:“Primärvård, akut, psykiatri + valfri”, recruitNow:“2 ggr/år”, recruit2027:“Omstrukturering 2027”, duration:“12 mån”, contact:“Utbildningscentrum Örebro”, source:“vardgivare.regionorebrolan.se”, notes:“Klinik-BT = integrerad. Valfri placering möjlig.”, perks:[], sponsored:false,
+nearby:[
+{ region:“Dalarna”, direction:“norr”, time:“~1,5 timmar”, highlight:“Falu lasarett — 12–24 BT/år” },
+{ region:“Sörmland”, direction:“öster”, time:“~1,5 timmar”, highlight:“Mälarsjukhuset Eskilstuna — integrerad BT” },
+{ region:“Värmland”, direction:“väster”, time:“~2 timmar”, highlight:“Centralsjukhuset Karlstad — integrerad BT” },
+]},
+{ id:“halland”, name:“Halland”, pop:“340 000”, btTypes:[“Fristående”], slotsNow:“2/omgång”, slots2027:“Ej specificerat”, hospitals:[“Hallands sjukhus Halmstad”,“Hallands sjukhus Varberg”], placements:“Akut, primärvård, psykiatri”, recruitNow:“Löpande”, recruit2027:“Ej publicerat”, duration:“12 mån”, contact:“Hallands sjukhus”, source:“regionhalland.se”, notes:“Inga tillgodoräknanden — kvalitet prioriteras.”, perks:[], sponsored:false,
+nearby:[
+{ region:“Västra Götaland”, direction:“norr”, time:“~1 timme”, highlight:“Sahlgrenska + 5 andra sjukhus — 40 fristående BT” },
+{ region:“Skåne”, direction:“söder”, time:“~1 timme”, highlight:“SUS Lund/Malmö — 240–300 platser planeras 2027” },
+]},
+{ id:“dalarna”, name:“Dalarna”, pop:“290 000”, btTypes:[“Fristående”], slotsNow:“12–24/år”, slots2027:“Ej specificerat”, hospitals:[“Falu lasarett”,“Mora lasarett”], placements:“Akut, primärvård, psykiatri”, recruitNow:“Löpande”, recruit2027:“Ej publicerat”, duration:“12 mån”, contact:“BT-studierektor Dalarna”, source:“Läkartidningen”, notes:“Bland flest BT per invånare i landet.”, perks:[], sponsored:false,
+nearby:[
+{ region:“Uppsala”, direction:“sydöst”, time:“~2 timmar”, highlight:“Akademiska sjukhuset — fristående BT” },
+{ region:“Örebro”, direction:“söder”, time:“~1,5 timmar”, highlight:“USÖ — fristående + integrerad BT” },
+]},
+{ id:“blekinge”, name:“Blekinge”, pop:“160 000”, btTypes:[“Fristående”], slotsNow:“4”, slots2027:“Ej specificerat”, hospitals:[“Blekingesjukhuset Karlskrona”], placements:“Primärvård, akut, psykiatri”, recruitNow:“Löpande”, recruit2027:“Ej publicerat”, duration:“12 mån”, contact:“Region Blekinge”, source:“Region Blekinge”, notes:null, perks:[], sponsored:false,
+nearby:[
+{ region:“Skåne”, direction:“väster”, time:“~1,5 timmar”, highlight:“SUS + 6 andra sjukhus” },
+{ region:“Kalmar”, direction:“norr”, time:“~2 timmar”, highlight:“Länssjukhuset Kalmar — integrerad BT” },
+]},
+{ id:“vasternorrland”, name:“Västernorrland”, pop:“245 000”, btTypes:[“Fristående”], slotsNow:“6–9/år”, slots2027:“Ej specificerat”, hospitals:[“Sundsvalls sjukhus”,“Örnsköldsviks sjukhus”,“Sollefteå sjukhus”], placements:“Akut, primärvård, psykiatri”, recruitNow:“Löpande”, recruit2027:“Ej publicerat”, duration:“12 mån”, contact:“Region Västernorrland”, source:“Region Västernorrland”, notes:null, perks:[“5 000 kr/mån extra”], sponsored:false,
+nearby:[
+{ region:“Norrbotten”, direction:“norr”, time:“~3 timmar”, highlight:“5 sjukhus — boende + pendling ingår” },
+]},
+{ id:“kalmar”, name:“Kalmar”, pop:“250 000”, btTypes:[“Integrerad”], slotsNow:“Behovsanpassat”, slots2027:“Fristående kan tillkomma”, hospitals:[“Länssjukhuset Kalmar”,“Västerviks sjukhus”,“Oskarshamns sjukhus”], placements:“Akut, primärvård, psykiatri”, recruitNow:“Verksamheterna rekryterar”, recruit2027:“Ej publicerat”, duration:“12 mån”, contact:“Region Kalmar”, source:“regionkalmar.se”, notes:“Enbart integrerad BT till 2027.”, perks:[], sponsored:false,
+nearby:[
+{ region:“Östergötland”, direction:“norr”, time:“~2 timmar”, highlight:“US Linköping — fristående + integrerad BT” },
+{ region:“Blekinge”, direction:“söder”, time:“~2 timmar”, highlight:“Blekingesjukhuset — 4 fristående BT” },
+]},
+{ id:“jonkoping”, name:“Jönköping”, pop:“370 000”, btTypes:[“Integrerad”], slotsNow:“Behovsanpassat”, slots2027:“Fristående kan tillkomma”, hospitals:[“Länssjukhuset Ryhov”,“Höglandssjukhuset Eksjö”,“Värnamo sjukhus”], placements:“Akut, primärvård, psykiatri”, recruitNow:“Sök ST direkt”, recruit2027:“Ej publicerat”, duration:“12 mån”, contact:“Region Jönköping”, source:“Läkartidningen”, notes:null, perks:[], sponsored:false,
+nearby:[
+{ region:“Östergötland”, direction:“öster”, time:“~1,5 timmar”, highlight:“US Linköping — fristående + integrerad” },
+{ region:“Västra Götaland”, direction:“väster”, time:“~1,5 timmar”, highlight:“Sahlgrenska + 5 sjukhus — 40 BT 2026” },
+{ region:“Skåne”, direction:“söder”, time:“~2 timmar”, highlight:“240–300 BT-platser planeras 2027” },
+]},
+{ id:“varmland”, name:“Värmland”, pop:“285 000”, btTypes:[“Integrerad”], slotsNow:“Behovsanpassat”, slots2027:“Ej specificerat”, hospitals:[“Centralsjukhuset Karlstad”,“Torsby sjukhus”], placements:“Akut, primärvård, psykiatri”, recruitNow:“Sök ST direkt”, recruit2027:“Ej publicerat”, duration:“12 mån”, contact:“Region Värmland”, source:“Läkartidningen”, notes:null, perks:[], sponsored:false,
+nearby:[
+{ region:“Örebro”, direction:“öster”, time:“~2 timmar”, highlight:“USÖ — fristående + integrerad BT” },
+{ region:“Västra Götaland”, direction:“söder”, time:“~2 timmar”, highlight:“Sahlgrenska + 5 sjukhus” },
+]},
+{ id:“sormland”, name:“Sörmland”, pop:“300 000”, btTypes:[“Integrerad”], slotsNow:“Behovsanpassat”, slots2027:“Ej specificerat”, hospitals:[“Mälarsjukhuset Eskilstuna”,“Nyköpings lasarett”,“Kullbergska sjukhuset”], placements:“Akut, primärvård, psykiatri”, recruitNow:“BT förutsätter ST-anställning”, recruit2027:“Ej publicerat”, duration:“12 mån”, contact:“Region Sörmland”, source:“Läkartidningen”, notes:null, perks:[], sponsored:false,
+nearby:[
+{ region:“Stockholm”, direction:“norr”, time:“~1 timme”, highlight:“SLSO — upp till 64 BT/år 2027” },
+{ region:“Östergötland”, direction:“söder”, time:“~1 timme”, highlight:“US Linköping — fristående + integrerad” },
+{ region:“Uppsala”, direction:“nordväst”, time:“~1,5 timmar”, highlight:“Akademiska — fristående BT” },
+]},
 ];
 
 // ============ COMPONENTS ============
 function InfoBox() {
-  const [open,setOpen]=useState(false);
-  return (<div style={{ background:"linear-gradient(135deg,#1E293B,#334155)",borderRadius:16,padding:"28px",color:"#fff",position:"relative",overflow:"hidden",marginBottom:24 }}>
-    <div style={{ position:"absolute",top:-40,right:-40,width:160,height:160,background:"radial-gradient(circle,rgba(251,191,36,0.12) 0%,transparent 70%)",borderRadius:"50%" }}/>
-    <div style={{ display:"flex",alignItems:"center",gap:10,marginBottom:12 }}><span style={{fontSize:22}}>⚡</span><h2 style={{ margin:0,fontSize:18,fontWeight:700 }}>2027 — Allt förändras</h2></div>
-    <p style={{ margin:"0 0 12px",fontSize:14,lineHeight:1.7,color:"#CBD5E1",maxWidth:700 }}>Hittills har BT gällt <strong style={{color:"#fff"}}>utlandsutbildade</strong> (~400/år). <strong style={{color:"#FBBF24"}}>2027</strong> examineras första kullen från 6-åriga programmet — alla behöver BT. Platser ska <strong style={{color:"#FBBF24"}}>femdubblas till 2 000+</strong>.</p>
-    {open&&<div style={{ display:"flex",flexDirection:"column",gap:14,marginBottom:16 }}>
-      <div style={{ display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:12 }}>
-        {[["~400","BT idag","#FBBF24"],["2 000+","Behövs 2027","#34D399"],["2 100–2 500","Planeras/år","#60A5FA"]].map(([n,l,c])=>(<div key={l} style={{ background:"rgba(255,255,255,0.06)",borderRadius:12,padding:"16px 18px",border:"1px solid rgba(255,255,255,0.08)" }}><div style={{ fontSize:26,fontWeight:800,color:c }}>{n}</div><div style={{ fontSize:12,color:"#94A3B8",marginTop:2 }}>{l}</div></div>))}
-      </div>
-      <div style={{ background:"rgba(251,191,36,0.08)",borderRadius:12,padding:"14px 18px",border:"1px solid rgba(251,191,36,0.15)",fontSize:13,color:"#FDE68A",lineHeight:1.6 }}><strong>Tidslinje:</strong> Examen juni 2027 → BT höst 2027. Examen jan 2028 → BT maj 2028+. AT kvar till ~2030.</div>
-    </div>}
-    <button onClick={()=>setOpen(!open)} style={{ background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.12)",color:"#E2E8F0",padding:"8px 20px",borderRadius:8,fontSize:13,fontWeight:600,cursor:"pointer" }}>{open?"Visa mindre ↑":"Läs mer om 2027 ↓"}</button>
+const [open,setOpen]=useState(false);
+return (<div style={{ background:“linear-gradient(135deg,#1E293B,#334155)”,borderRadius:16,padding:“28px”,color:”#fff”,position:“relative”,overflow:“hidden”,marginBottom:24 }}>
+<div style={{ position:“absolute”,top:-40,right:-40,width:160,height:160,background:“radial-gradient(circle,rgba(251,191,36,0.12) 0%,transparent 70%)”,borderRadius:“50%” }}/>
+<div style={{ display:“flex”,alignItems:“center”,gap:10,marginBottom:12 }}><span style={{fontSize:22}}>⚡</span><h2 style={{ margin:0,fontSize:18,fontWeight:700 }}>2027 — Allt förändras</h2></div>
+<p style={{ margin:“0 0 12px”,fontSize:14,lineHeight:1.7,color:”#CBD5E1”,maxWidth:700 }}>Hittills har BT gällt <strong style={{color:”#fff”}}>utlandsutbildade läkare</strong> (uppskattningsvis ~400/år). <strong style={{color:”#FBBF24”}}>2027</strong> examineras första kullen från 6-åriga programmet — alla förväntas genomgå BT. Antalet platser <strong style={{color:”#FBBF24”}}>kan behöva öka kraftigt, potentiellt till över 2 000 per år</strong>.</p>
+{open&&<div style={{ display:“flex”,flexDirection:“column”,gap:14,marginBottom:16 }}>
+<div style={{ display:“grid”,gridTemplateColumns:“repeat(auto-fit,minmax(180px,1fr))”,gap:12 }}>
+{[[“~400”,“BT-platser idag (uppskattn.)”,”#FBBF24”],[“2 000+”,“Bedömt behov 2027”,”#34D399”],[“2 100–2 500”,“Uppskattad planering/år”,”#60A5FA”]].map(([n,l,c])=>(<div key={l} style={{ background:“rgba(255,255,255,0.06)”,borderRadius:12,padding:“16px 18px”,border:“1px solid rgba(255,255,255,0.08)” }}><div style={{ fontSize:26,fontWeight:800,color:c }}>{n}</div><div style={{ fontSize:12,color:”#94A3B8”,marginTop:2 }}>{l}</div></div>))}
+</div>
+<div style={{ background:“rgba(251,191,36,0.08)”,borderRadius:12,padding:“14px 18px”,border:“1px solid rgba(251,191,36,0.15)”,fontSize:13,color:”#FDE68A”,lineHeight:1.6 }}><strong>Tidslinje:</strong> Examen juni 2027 → BT höst 2027. Examen jan 2028 → BT maj 2028+. AT kvar till ~2030.</div>
+</div>}
+<button onClick={()=>setOpen(!open)} style={{ background:“rgba(255,255,255,0.08)”,border:“1px solid rgba(255,255,255,0.12)”,color:”#E2E8F0”,padding:“8px 20px”,borderRadius:8,fontSize:13,fontWeight:600,cursor:“pointer” }}>{open?“Visa mindre ↑”:“Läs mer om 2027 ↓”}</button>
+
   </div>);
 }
 
 function NearbySection({ nearby, onNavigate }) {
-  return (<div style={{ marginTop:16,padding:"16px 18px",borderRadius:12,background:"linear-gradient(135deg,#F0F9FF,#F8FAFC)",border:"1px solid #BAE6FD" }}>
-    <div style={{ display:"flex",alignItems:"center",gap:8,marginBottom:12 }}>
-      <span style={{ fontSize:16 }}>📍</span>
-      <h4 style={{ margin:0,fontSize:14,fontWeight:700,color:"#0369A1" }}>I närheten</h4>
-    </div>
-    <div style={{ display:"flex",flexDirection:"column",gap:10 }}>
-      {nearby.map((n,i)=>(<div key={i} style={{ display:"flex",gap:12,alignItems:"flex-start",cursor:"pointer",padding:"10px 14px",borderRadius:10,background:"#fff",border:"1px solid #E0F2FE",transition:"all 0.15s" }}
-        onClick={(e)=>{ e.stopPropagation(); onNavigate(n.region); }}
-        onMouseEnter={e=>e.currentTarget.style.borderColor="#7DD3FC"}
-        onMouseLeave={e=>e.currentTarget.style.borderColor="#E0F2FE"}>
-        <div style={{ flexShrink:0,width:56,textAlign:"center" }}>
-          <div style={{ fontSize:12,fontWeight:800,color:"#0284C7" }}>{n.time}</div>
-          <div style={{ fontSize:10,color:"#94A3B8",marginTop:2 }}>{n.direction}</div>
-        </div>
-        <div>
-          <div style={{ fontSize:14,fontWeight:700,color:"#0F172A" }}>{n.region}</div>
-          <div style={{ fontSize:12,color:"#64748B",marginTop:2,lineHeight:1.5 }}>{n.highlight}</div>
-        </div>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" style={{ flexShrink:0,marginTop:4,marginLeft:"auto" }}><polyline points="9 18 15 12 9 6"/></svg>
-      </div>))}
-    </div>
+return (<div style={{ marginTop:16,padding:“16px 18px”,borderRadius:12,background:“linear-gradient(135deg,#F0F9FF,#F8FAFC)”,border:“1px solid #BAE6FD” }}>
+<div style={{ display:“flex”,alignItems:“center”,gap:8,marginBottom:12 }}>
+<span style={{ fontSize:16 }}>📍</span>
+<h4 style={{ margin:0,fontSize:14,fontWeight:700,color:”#0369A1” }}>I närheten</h4>
+</div>
+<div style={{ display:“flex”,flexDirection:“column”,gap:10 }}>
+{nearby.map((n,i)=>(<div key={i} style={{ display:“flex”,gap:12,alignItems:“flex-start”,cursor:“pointer”,padding:“10px 14px”,borderRadius:10,background:”#fff”,border:“1px solid #E0F2FE”,transition:“all 0.15s” }}
+onClick={(e)=>{ e.stopPropagation(); onNavigate(n.region); }}
+onMouseEnter={e=>e.currentTarget.style.borderColor=”#7DD3FC”}
+onMouseLeave={e=>e.currentTarget.style.borderColor=”#E0F2FE”}>
+<div style={{ flexShrink:0,width:56,textAlign:“center” }}>
+<div style={{ fontSize:12,fontWeight:800,color:”#0284C7” }}>{n.time}</div>
+<div style={{ fontSize:10,color:”#94A3B8”,marginTop:2 }}>{n.direction}</div>
+</div>
+<div>
+<div style={{ fontSize:14,fontWeight:700,color:”#0F172A” }}>{n.region}</div>
+<div style={{ fontSize:12,color:”#64748B”,marginTop:2,lineHeight:1.5 }}>{n.highlight}</div>
+</div>
+<svg width=“16” height=“16” viewBox=“0 0 24 24” fill=“none” stroke=”#94A3B8” strokeWidth=“2” style={{ flexShrink:0,marginTop:4,marginLeft:“auto” }}><polyline points="9 18 15 12 9 6"/></svg>
+</div>))}
+</div>
+
   </div>);
 }
 
 function RegionCard({ r, onNavigate }) {
-  const [open,setOpen]=useState(false);
-  const has2027=r.slots2027&&!r.slots2027.startsWith("Ej");
-  return (<div id={`region-${r.id}`} style={{ background:r.sponsored?"linear-gradient(135deg,#FFFBEB 0%,#FFF 30%)":"#fff",borderRadius:16,border:r.sponsored?"1.5px solid #FDE68A":"1px solid #E2E8F0",overflow:"hidden",boxShadow:open?"0 8px 30px rgba(0,0,0,0.08)":"0 1px 4px rgba(0,0,0,0.04)" }}>
-    {r.sponsored&&<div style={{ background:"linear-gradient(90deg,#F59E0B,#D97706)",padding:"6px 20px",display:"flex",justifyContent:"space-between" }}><span style={{ fontSize:11,fontWeight:700,color:"#fff",textTransform:"uppercase",letterSpacing:1.5 }}>⭐ Sponsrad regionprofil</span><span style={{ fontSize:10,color:"rgba(255,255,255,0.7)" }}>Annons</span></div>}
-    <div style={{ padding:"24px 28px",cursor:"pointer" }} onClick={()=>setOpen(!open)}>
-      <div style={{ display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:16,flexWrap:"wrap" }}>
-        <div style={{ flex:1,minWidth:240 }}>
-          <div style={{ display:"flex",alignItems:"center",gap:12,marginBottom:10,flexWrap:"wrap" }}>
-            <h2 style={{ margin:0,fontSize:22,fontWeight:800,color:"#0F172A" }}>{r.name}</h2>
-            {has2027&&<span style={{ fontSize:10,fontWeight:800,color:"#D97706",background:"#FEF3C7",padding:"3px 10px",borderRadius:5,textTransform:"uppercase",letterSpacing:1 }}>2027-plan klar</span>}
-            <span style={{ fontSize:12,color:"#94A3B8" }}>{r.pop} inv.</span>
-          </div>
-          <div style={{ display:"flex",gap:8,flexWrap:"wrap",marginBottom:12 }}>
-            {r.btTypes.map(t=>(<span key={t} style={{ display:"inline-flex",alignItems:"center",gap:5,padding:"4px 12px",borderRadius:20,background:t==="Fristående"?"#FFF7ED":t==="Integrerad"?"#ECFDF5":"#EDE9FE",border:`1.5px solid ${TYPE_COLORS[t]}`,fontSize:12,fontWeight:600,color:t==="Fristående"?"#C2410C":t==="Integrerad"?"#065F46":"#5B21B6" }}><span style={{ width:6,height:6,borderRadius:"50%",background:TYPE_COLORS[t] }}/>{t.includes("BT")?t:`${t} BT`}</span>))}
-            {r.perks.map(p=>(<span key={p} style={{ padding:"4px 12px",borderRadius:20,background:"#F0FDF4",border:"1.5px solid #86EFAC",fontSize:12,fontWeight:600,color:"#166534" }}>✓ {p}</span>))}
-          </div>
-          <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6px 24px",fontSize:13,color:"#475569" }}>
-            <div><span style={{color:"#94A3B8"}}>Platser idag: </span><strong style={{color:"#1A202C"}}>{r.slotsNow}</strong></div>
-            <div><span style={{color:"#94A3B8"}}>2027: </span><strong style={{color:has2027?"#D97706":"#94A3B8"}}>{r.slots2027}</strong></div>
-            <div style={{gridColumn:"1/-1"}}><span style={{color:"#94A3B8"}}>Sjukhus: </span>{r.hospitals.slice(0,3).join(", ")}{r.hospitals.length>3?` +${r.hospitals.length-3} till`:""}</div>
-          </div>
-        </div>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" strokeWidth="2" style={{ transform:open?"rotate(180deg)":"none",transition:"transform 0.2s",marginTop:8,flexShrink:0 }}><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-    </div>
-    {open&&(<div style={{ padding:"0 28px 28px",borderTop:"1px solid #F1F5F9" }}>
-      <div style={{ display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:20,marginTop:20 }}>
-        <div><h4 style={{ margin:"0 0 8px",fontSize:12,fontWeight:700,color:"#94A3B8",textTransform:"uppercase",letterSpacing:1 }}>Placeringar</h4><p style={{ margin:0,fontSize:14,color:"#1A202C",lineHeight:1.6 }}>{r.placements}</p><p style={{ margin:"4px 0 0",fontSize:13,color:"#64748B" }}>Tid: {r.duration}</p></div>
-        <div><h4 style={{ margin:"0 0 8px",fontSize:12,fontWeight:700,color:"#94A3B8",textTransform:"uppercase",letterSpacing:1 }}>Rekrytering nu</h4><p style={{ margin:0,fontSize:14,color:"#1A202C",lineHeight:1.6 }}>{r.recruitNow}</p></div>
-        <div><h4 style={{ margin:"0 0 8px",fontSize:12,fontWeight:700,color:"#D97706",textTransform:"uppercase",letterSpacing:1 }}>Rekrytering 2027</h4><p style={{ margin:0,fontSize:14,color:"#1A202C",lineHeight:1.6 }}>{r.recruit2027}</p></div>
-        <div><h4 style={{ margin:"0 0 8px",fontSize:12,fontWeight:700,color:"#94A3B8",textTransform:"uppercase",letterSpacing:1 }}>Sjukhus</h4><div style={{ display:"flex",flexWrap:"wrap",gap:6 }}>{r.hospitals.map(h=>(<span key={h} style={{ padding:"4px 10px",borderRadius:6,background:"#F1F5F9",fontSize:12,color:"#475569" }}>{h}</span>))}</div></div>
-      </div>
-      {r.notes&&<div style={{ marginTop:16,padding:"12px 16px",borderRadius:10,background:"#FFFBEB",border:"1px solid #FDE68A",fontSize:13,color:"#92400E",lineHeight:1.6 }}>💡 {r.notes}</div>}
-      {r.nearby&&r.nearby.length>0&&<NearbySection nearby={r.nearby} onNavigate={onNavigate}/>}
-      <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:16,flexWrap:"wrap",gap:8 }}>
-        <div style={{ fontSize:13 }}><span style={{color:"#94A3B8"}}>Kontakt: </span><span style={{color:"#3B82F6",fontWeight:500}}>{r.contact}</span></div>
-        <div style={{ fontSize:11,color:"#CBD5E1" }}>Källa: {r.source}</div>
-      </div>
-    </div>)}
+const [open,setOpen]=useState(false);
+const has2027=r.slots2027&&!r.slots2027.startsWith(“Ej”);
+return (<div id={`region-${r.id}`} style={{ background:r.sponsored?“linear-gradient(135deg,#FFFBEB 0%,#FFF 30%)”:”#fff”,borderRadius:16,border:r.sponsored?“1.5px solid #FDE68A”:“1px solid #E2E8F0”,overflow:“hidden”,boxShadow:open?“0 8px 30px rgba(0,0,0,0.08)”:“0 1px 4px rgba(0,0,0,0.04)” }}>
+{r.sponsored&&<div style={{ background:“linear-gradient(90deg,#F59E0B,#D97706)”,padding:“6px 20px”,display:“flex”,justifyContent:“space-between” }}><span style={{ fontSize:11,fontWeight:700,color:”#fff”,textTransform:“uppercase”,letterSpacing:1.5 }}>⭐ Sponsrad regionprofil</span><span style={{ fontSize:10,color:“rgba(255,255,255,0.7)” }}>Annons</span></div>}
+<div style={{ padding:“24px 28px”,cursor:“pointer” }} onClick={()=>setOpen(!open)}>
+<div style={{ display:“flex”,justifyContent:“space-between”,alignItems:“flex-start”,gap:16,flexWrap:“wrap” }}>
+<div style={{ flex:1,minWidth:240 }}>
+<div style={{ display:“flex”,alignItems:“center”,gap:12,marginBottom:10,flexWrap:“wrap” }}>
+<h2 style={{ margin:0,fontSize:22,fontWeight:800,color:”#0F172A” }}>{r.name}</h2>
+{has2027&&<span style={{ fontSize:10,fontWeight:800,color:”#D97706”,background:”#FEF3C7”,padding:“3px 10px”,borderRadius:5,textTransform:“uppercase”,letterSpacing:1 }}>2027-plan klar</span>}
+<span style={{ fontSize:12,color:”#94A3B8” }}>{r.pop} inv.</span>
+</div>
+<div style={{ display:“flex”,gap:8,flexWrap:“wrap”,marginBottom:12 }}>
+{r.btTypes.map(t=>(<span key={t} style={{ display:“inline-flex”,alignItems:“center”,gap:5,padding:“4px 12px”,borderRadius:20,background:t===“Fristående”?”#FFF7ED”:t===“Integrerad”?”#ECFDF5”:”#EDE9FE”,border:`1.5px solid ${TYPE_COLORS[t]}`,fontSize:12,fontWeight:600,color:t===“Fristående”?”#C2410C”:t===“Integrerad”?”#065F46”:”#5B21B6” }}><span style={{ width:6,height:6,borderRadius:“50%”,background:TYPE_COLORS[t] }}/>{t.includes(“BT”)?t:`${t} BT`}</span>))}
+{r.perks.map(p=>(<span key={p} style={{ padding:“4px 12px”,borderRadius:20,background:”#F0FDF4”,border:“1.5px solid #86EFAC”,fontSize:12,fontWeight:600,color:”#166534” }}>✓ {p}</span>))}
+</div>
+<div style={{ display:“grid”,gridTemplateColumns:“1fr 1fr”,gap:“6px 24px”,fontSize:13,color:”#475569” }}>
+<div><span style={{color:”#94A3B8”}}>Platser idag: </span><strong style={{color:”#1A202C”}}>{r.slotsNow}</strong></div>
+<div><span style={{color:”#94A3B8”}}>2027: </span><strong style={{color:has2027?”#D97706”:”#94A3B8”}}>{r.slots2027}</strong></div>
+<div style={{gridColumn:“1/-1”}}><span style={{color:”#94A3B8”}}>Sjukhus: </span>{r.hospitals.slice(0,3).join(”, “)}{r.hospitals.length>3?` +${r.hospitals.length-3} till`:””}</div>
+</div>
+</div>
+<svg width=“22” height=“22” viewBox=“0 0 24 24” fill=“none” stroke=”#CBD5E1” strokeWidth=“2” style={{ transform:open?“rotate(180deg)”:“none”,transition:“transform 0.2s”,marginTop:8,flexShrink:0 }}><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+</div>
+{open&&(<div style={{ padding:“0 28px 28px”,borderTop:“1px solid #F1F5F9” }}>
+<div style={{ display:“grid”,gridTemplateColumns:“repeat(auto-fit,minmax(260px,1fr))”,gap:20,marginTop:20 }}>
+<div><h4 style={{ margin:“0 0 8px”,fontSize:12,fontWeight:700,color:”#94A3B8”,textTransform:“uppercase”,letterSpacing:1 }}>Placeringar</h4><p style={{ margin:0,fontSize:14,color:”#1A202C”,lineHeight:1.6 }}>{r.placements}</p><p style={{ margin:“4px 0 0”,fontSize:13,color:”#64748B” }}>Tid: {r.duration}</p></div>
+<div><h4 style={{ margin:“0 0 8px”,fontSize:12,fontWeight:700,color:”#94A3B8”,textTransform:“uppercase”,letterSpacing:1 }}>Rekrytering nu</h4><p style={{ margin:0,fontSize:14,color:”#1A202C”,lineHeight:1.6 }}>{r.recruitNow}</p></div>
+<div><h4 style={{ margin:“0 0 8px”,fontSize:12,fontWeight:700,color:”#D97706”,textTransform:“uppercase”,letterSpacing:1 }}>Rekrytering 2027</h4><p style={{ margin:0,fontSize:14,color:”#1A202C”,lineHeight:1.6 }}>{r.recruit2027}</p></div>
+<div><h4 style={{ margin:“0 0 8px”,fontSize:12,fontWeight:700,color:”#94A3B8”,textTransform:“uppercase”,letterSpacing:1 }}>Sjukhus</h4><div style={{ display:“flex”,flexWrap:“wrap”,gap:6 }}>{r.hospitals.map(h=>(<span key={h} style={{ padding:“4px 10px”,borderRadius:6,background:”#F1F5F9”,fontSize:12,color:”#475569” }}>{h}</span>))}</div></div>
+</div>
+{r.notes&&<div style={{ marginTop:16,padding:“12px 16px”,borderRadius:10,background:”#FFFBEB”,border:“1px solid #FDE68A”,fontSize:13,color:”#92400E”,lineHeight:1.6 }}>💡 {r.notes}</div>}
+{r.nearby&&r.nearby.length>0&&<NearbySection nearby={r.nearby} onNavigate={onNavigate}/>}
+<div style={{ display:“flex”,justifyContent:“space-between”,alignItems:“center”,marginTop:16,flexWrap:“wrap”,gap:8 }}>
+<div style={{ fontSize:13 }}><span style={{color:”#94A3B8”}}>Kontakt: </span><span style={{color:”#3B82F6”,fontWeight:500}}>{r.contact}</span></div>
+<div style={{ fontSize:11,color:”#CBD5E1”,marginTop:4,fontStyle:“italic” }}>Detaljerad kontaktinfo (namn, telefon, e-post) kommer att läggas till</div>
+<div style={{ fontSize:11,color:”#CBD5E1” }}>Källa: {r.source}</div>
+</div>
+</div>)}
+
   </div>);
 }
 
 function EmployerCTA() {
-  return (<div style={{ background:"linear-gradient(135deg,#0F172A,#1E293B)",borderRadius:16,padding:"32px 28px",color:"#fff",textAlign:"center",margin:"32px 0",position:"relative",overflow:"hidden" }}>
-    <div style={{ position:"absolute",inset:0,background:"radial-gradient(ellipse at 30% 50%,rgba(59,130,246,0.08) 0%,transparent 60%)" }}/>
-    <div style={{ position:"relative" }}>
-      <div style={{ fontSize:14,fontWeight:600,color:"#60A5FA",textTransform:"uppercase",letterSpacing:2,marginBottom:8 }}>För regioner & sjukhus</div>
-      <h2 style={{ margin:"0 0 12px",fontSize:24,fontWeight:800,fontFamily:"'DM Serif Display',serif" }}>Nå Sveriges nästa generation läkare</h2>
-      <p style={{ margin:"0 0 20px",fontSize:14,color:"#94A3B8",lineHeight:1.7,maxWidth:500,marginLeft:"auto",marginRight:"auto" }}>Från 2027 söker 2 000+ nyexaminerade läkare BT-tjänst. Lyft er region med en sponsrad profil eller featured listing.</p>
-      <div style={{ display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap" }}>
-        {["Sponsrad profil","Featured listing"].map(t=>(<div key={t} style={{ background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:10,padding:"12px 20px",fontSize:13,fontWeight:600,color:"#E2E8F0" }}>{t}</div>))}
-      </div>
-      <button style={{ marginTop:20,background:"#3B82F6",border:"none",color:"#fff",padding:"12px 32px",borderRadius:10,fontSize:15,fontWeight:700,cursor:"pointer",boxShadow:"0 4px 15px rgba(59,130,246,0.3)" }}>Kontakta oss →</button>
-    </div>
+return (<div style={{ background:“linear-gradient(135deg,#0F172A,#1E293B)”,borderRadius:16,padding:“32px 28px”,color:”#fff”,textAlign:“center”,margin:“32px 0”,position:“relative”,overflow:“hidden” }}>
+<div style={{ position:“absolute”,inset:0,background:“radial-gradient(ellipse at 30% 50%,rgba(59,130,246,0.08) 0%,transparent 60%)” }}/>
+<div style={{ position:“relative” }}>
+<div style={{ fontSize:14,fontWeight:600,color:”#60A5FA”,textTransform:“uppercase”,letterSpacing:2,marginBottom:8 }}>För regioner & sjukhus</div>
+<h2 style={{ margin:“0 0 12px”,fontSize:24,fontWeight:800,fontFamily:”‘DM Serif Display’,serif” }}>Nå Sveriges nästa generation läkare</h2>
+<p style={{ margin:“0 0 20px”,fontSize:14,color:”#94A3B8”,lineHeight:1.7,maxWidth:500,marginLeft:“auto”,marginRight:“auto” }}>Från 2027 väntas 2 000+ nyexaminerade läkare söka BT-tjänst varje år. Lyft er region med en sponsrad profil eller featured listing.</p>
+<div style={{ display:“flex”,gap:12,justifyContent:“center”,flexWrap:“wrap” }}>
+{[“Sponsrad profil”,“Featured listing”].map(t=>(<div key={t} style={{ background:“rgba(255,255,255,0.06)”,border:“1px solid rgba(255,255,255,0.1)”,borderRadius:10,padding:“12px 20px”,fontSize:13,fontWeight:600,color:”#E2E8F0” }}>{t}</div>))}
+</div>
+<button style={{ marginTop:20,background:”#3B82F6”,border:“none”,color:”#fff”,padding:“12px 32px”,borderRadius:10,fontSize:15,fontWeight:700,cursor:“pointer”,boxShadow:“0 4px 15px rgba(59,130,246,0.3)” }}>Kontakta oss →</button>
+</div>
+
   </div>);
 }
 
 // ============ MAIN ============
 function BTGuiden() {
-  const [search,setSearch]=useState("");
-  const [typeFilter,setTypeFilter]=useState("Alla");
-  const [show2027Only,setShow2027Only]=useState(false);
+const [search,setSearch]=useState(””);
+const [typeFilter,setTypeFilter]=useState(“Alla”);
+const [show2027Only,setShow2027Only]=useState(false);
 
-  const filtered = useMemo(()=>{
-    return REGIONS.filter(r=>{
-      if (show2027Only && r.slots2027.startsWith("Ej")) return false;
-      if (typeFilter!=="Alla") {
-        if (!r.btTypes.includes(typeFilter)) return false;
-      }
-      if (search) { const s=search.toLowerCase(); return r.name.toLowerCase().includes(s)||r.hospitals.some(h=>h.toLowerCase().includes(s)); }
-      return true;
-    }).sort((a,b)=>{ if(a.sponsored&&!b.sponsored)return -1; if(!a.sponsored&&b.sponsored)return 1; return 0; });
-  },[search,typeFilter,show2027Only]);
+const filtered = useMemo(()=>{
+return REGIONS.filter(r=>{
+if (show2027Only && r.slots2027.startsWith(“Ej”)) return false;
+if (typeFilter!==“Alla”) {
+if (!r.btTypes.includes(typeFilter)) return false;
+}
+if (search) { const s=search.toLowerCase(); return r.name.toLowerCase().includes(s)||r.hospitals.some(h=>h.toLowerCase().includes(s)); }
+return true;
+}).sort((a,b)=>{ if(a.sponsored&&!b.sponsored)return -1; if(!a.sponsored&&b.sponsored)return 1; return 0; });
+},[search,typeFilter,show2027Only]);
 
-  const handleNavigate = (regionName) => {
-    const el = document.getElementById(`region-${REGIONS.find(r=>r.name===regionName)?.id}`);
-    if (el) { el.scrollIntoView({ behavior:"smooth", block:"start" }); }
-  };
+const handleNavigate = (regionName) => {
+const el = document.getElementById(`region-${REGIONS.find(r=>r.name===regionName)?.id}`);
+if (el) { el.scrollIntoView({ behavior:“smooth”, block:“start” }); }
+};
 
-  return (<div style={{ minHeight:"100vh",background:"#F8FAFC",fontFamily:"'DM Sans',sans-serif" }}>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
-    <style>{`*{box-sizing:border-box}select{appearance:auto}`}</style>
+return (<div style={{ minHeight:“100vh”,background:”#F8FAFC”,fontFamily:”‘DM Sans’,sans-serif” }}>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>{`*{box-sizing:border-box}select{appearance:auto}`}</style>
 
-    <div style={{ background:"linear-gradient(135deg,#0F172A 0%,#1E293B 50%,#0F172A 100%)",padding:"48px 24px 44px",color:"#fff",position:"relative",overflow:"hidden" }}>
-      <div style={{ position:"absolute",top:-80,right:-80,width:300,height:300,background:"radial-gradient(circle,rgba(59,130,246,0.15) 0%,transparent 70%)",borderRadius:"50%" }}/>
-      <div style={{ maxWidth:1100,margin:"0 auto",position:"relative" }}>
-        <div style={{ display:"flex",alignItems:"center",gap:12,marginBottom:8 }}>
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" strokeWidth="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          <span style={{ fontSize:13,fontWeight:600,color:"#60A5FA",textTransform:"uppercase",letterSpacing:2 }}>Sverige 2027</span>
-        </div>
-        <h1 style={{ margin:"0 0 10px",fontSize:38,fontWeight:800,lineHeight:1.1,fontFamily:"'DM Serif Display',serif" }}>BT-guiden</h1>
-        <p style={{ margin:"0 0 20px",fontSize:15,color:"#94A3B8",lineHeight:1.6,maxWidth:600 }}>Alla regioners bastjänstgöringar — samlat, jämförbart och uppdaterat.</p>
-        <div style={{ display:"flex",gap:24,flexWrap:"wrap" }}>
-          {[[REGIONS.length+" regioner","📍"],[REGIONS.reduce((s,r)=>s+r.hospitals.length,0)+" sjukhus/VC","🏥"],["2 000+ platser 2027","⚡"]].map(([t,e])=>(<div key={t} style={{ display:"flex",alignItems:"center",gap:8,fontSize:14,color:"#CBD5E1" }}><span style={{fontSize:18}}>{e}</span>{t}</div>))}
-        </div>
-      </div>
+```
+{/* PROTOTYPE BANNER */}
+<div style={{ background:"#FEF3C7",borderBottom:"2px solid #F59E0B",padding:"12px 24px",textAlign:"center" }}>
+  <div style={{ fontSize:14,fontWeight:700,color:"#92400E" }}>⚠️ PROTOTYP — Denna sida är under utveckling. Informationen bygger på offentliga källor och uppskattningar.</div>
+  <div style={{ fontSize:12,color:"#A16207",marginTop:4 }}>Innehållet kan förändras och ersätter inte aktuell information från respektive region. Kontrollera alltid med din region innan du fattar beslut.</div>
+  <a href="https://forms.gle/xrczJD86A3PHwipV6" target="_blank" rel="noopener noreferrer" style={{ display:"inline-block",marginTop:8,background:"#92400E",color:"#fff",padding:"6px 16px",borderRadius:6,fontSize:12,fontWeight:700,textDecoration:"none" }}>💬 Ge oss din feedback →</a>
+</div>
+
+<div style={{ background:"linear-gradient(135deg,#0F172A 0%,#1E293B 50%,#0F172A 100%)",padding:"48px 24px 44px",color:"#fff",position:"relative",overflow:"hidden" }}>
+  <div style={{ position:"absolute",top:-80,right:-80,width:300,height:300,background:"radial-gradient(circle,rgba(59,130,246,0.15) 0%,transparent 70%)",borderRadius:"50%" }}/>
+  <div style={{ maxWidth:1100,margin:"0 auto",position:"relative" }}>
+    <div style={{ display:"flex",alignItems:"center",gap:12,marginBottom:8 }}>
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" strokeWidth="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      <span style={{ fontSize:13,fontWeight:600,color:"#60A5FA",textTransform:"uppercase",letterSpacing:2 }}>Sverige 2027</span>
     </div>
-
-    <div style={{ maxWidth:1100,margin:"0 auto",padding:"0 24px" }}>
-      <div style={{ background:"#fff",borderRadius:16,padding:"20px 24px",boxShadow:"0 4px 20px rgba(0,0,0,0.06)",marginTop:-20,position:"relative",zIndex:10,border:"1px solid #E2E8F0",display:"flex",gap:14,flexWrap:"wrap",alignItems:"flex-end" }}>
-        <div style={{ flex:1,minWidth:200,position:"relative" }}>
-          <label style={{ fontSize:11,fontWeight:600,color:"#94A3B8",textTransform:"uppercase",letterSpacing:1,display:"block",marginBottom:5 }}>Sök</label>
-          <svg style={{ position:"absolute",left:12,bottom:11,pointerEvents:"none" }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" placeholder="Region, sjukhus..." value={search} onChange={e=>setSearch(e.target.value)} style={{ width:"100%",padding:"10px 14px 10px 36px",borderRadius:10,border:"1.5px solid #E2E8F0",fontSize:14,outline:"none" }}/>
-        </div>
-        <div style={{ minWidth:160 }}>
-          <label style={{ fontSize:11,fontWeight:600,color:"#94A3B8",textTransform:"uppercase",letterSpacing:1,display:"block",marginBottom:5 }}>Typ</label>
-          <select value={typeFilter} onChange={e=>setTypeFilter(e.target.value)} style={{ padding:"10px 14px",borderRadius:10,border:"1.5px solid #E2E8F0",background:"#fff",fontSize:14,color:"#1A202C",cursor:"pointer",outline:"none",width:"100%" }}>
-            {["Alla","Fristående","Integrerad","Forskar-BT"].map(o=><option key={o}>{o}</option>)}
-          </select>
-        </div>
-        <label style={{ display:"flex",alignItems:"center",gap:8,cursor:"pointer",fontSize:13,color:"#64748B",fontWeight:600,paddingBottom:6 }}>
-          <input type="checkbox" checked={show2027Only} onChange={e=>setShow2027Only(e.target.checked)} style={{ width:18,height:18,accentColor:"#D97706",cursor:"pointer" }}/>
-          Bara 2027-plan
-        </label>
-      </div>
-
-      <div style={{ padding:"24px 0 0" }}><InfoBox/><BTModelsSection/></div>
-
-      <div style={{ fontSize:14,color:"#64748B",marginBottom:16 }}>Visar <strong style={{ color:"#1A202C",fontSize:18 }}>{filtered.length}</strong> av {REGIONS.length} regioner</div>
-
-      <div style={{ display:"flex",flexDirection:"column",gap:16 }}>
-        {filtered.map((r,i)=>(<div key={r.id}><RegionCard r={r} onNavigate={handleNavigate}/>{i===1&&<EmployerCTA/>}</div>))}
-      </div>
-      {filtered.length>4&&<EmployerCTA/>}
-
-      <div style={{ textAlign:"center",padding:"32px 20px 16px" }}>
-        <div style={{ display:"inline-block",background:"#fff",border:"2px solid #3B82F6",padding:"20px 28px",borderRadius:14 }}>
-          <div style={{ fontSize:16,fontWeight:700,color:"#1A202C",marginBottom:8 }}>💬 Ge oss din feedback — det tar bara 1 minut</div>
-          <div style={{ fontSize:13,color:"#64748B",marginBottom:8 }}>Kopiera och klistra in i din webbläsare:</div>
-          <div style={{ fontSize:16,color:"#3B82F6",fontWeight:700,userSelect:"all",cursor:"text",background:"#EFF6FF",padding:"12px 16px",borderRadius:8,letterSpacing:0.3 }}>forms.gle/xrczJD86A3PHwipV6</div>
-        </div>
-        <p style={{ margin:"10px 0 0",fontSize:13,color:"#94A3B8" }}>Hjälp oss göra BT-guiden bättre för alla</p>
-      </div>
-
-      <div style={{ textAlign:"center",padding:"16px 20px 48px",fontSize:12,color:"#94A3B8",lineHeight:1.8 }}>
-        <div style={{ maxWidth:600,margin:"0 auto" }}><strong style={{color:"#64748B"}}>⚠️ Om datan</strong><br/>Insamlad mars 2026. Kontrollera alltid med respektive region.</div>
-      </div>
+    <h1 style={{ margin:"0 0 10px",fontSize:38,fontWeight:800,lineHeight:1.1,fontFamily:"'DM Serif Display',serif" }}>BT-guiden</h1>
+    <p style={{ margin:"0 0 20px",fontSize:15,color:"#94A3B8",lineHeight:1.6,maxWidth:600 }}>Alla regioners bastjänstgöringar — samlat, jämförbart och uppdaterat.</p>
+    <div style={{ display:"flex",gap:24,flexWrap:"wrap" }}>
+      {[[REGIONS.length+" regioner","📍"],[REGIONS.reduce((s,r)=>s+r.hospitals.length,0)+" sjukhus/VC","🏥"],["2 000+ platser väntas 2027","⚡"]].map(([t,e])=>(<div key={t} style={{ display:"flex",alignItems:"center",gap:8,fontSize:14,color:"#CBD5E1" }}><span style={{fontSize:18}}>{e}</span>{t}</div>))}
     </div>
+  </div>
+</div>
+
+<div style={{ maxWidth:1100,margin:"0 auto",padding:"0 24px" }}>
+  <div style={{ background:"#fff",borderRadius:16,padding:"20px 24px",boxShadow:"0 4px 20px rgba(0,0,0,0.06)",marginTop:-20,position:"relative",zIndex:10,border:"1px solid #E2E8F0",display:"flex",gap:14,flexWrap:"wrap",alignItems:"flex-end" }}>
+    <div style={{ flex:1,minWidth:200,position:"relative" }}>
+      <label style={{ fontSize:11,fontWeight:600,color:"#94A3B8",textTransform:"uppercase",letterSpacing:1,display:"block",marginBottom:5 }}>Sök</label>
+      <svg style={{ position:"absolute",left:12,bottom:11,pointerEvents:"none" }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Region, sjukhus..." value={search} onChange={e=>setSearch(e.target.value)} style={{ width:"100%",padding:"10px 14px 10px 36px",borderRadius:10,border:"1.5px solid #E2E8F0",fontSize:14,outline:"none" }}/>
+    </div>
+    <div style={{ minWidth:160 }}>
+      <label style={{ fontSize:11,fontWeight:600,color:"#94A3B8",textTransform:"uppercase",letterSpacing:1,display:"block",marginBottom:5 }}>Typ</label>
+      <select value={typeFilter} onChange={e=>setTypeFilter(e.target.value)} style={{ padding:"10px 14px",borderRadius:10,border:"1.5px solid #E2E8F0",background:"#fff",fontSize:14,color:"#1A202C",cursor:"pointer",outline:"none",width:"100%" }}>
+        {["Alla","Fristående","Integrerad","Forskar-BT"].map(o=><option key={o}>{o}</option>)}
+      </select>
+    </div>
+    <label style={{ display:"flex",alignItems:"center",gap:8,cursor:"pointer",fontSize:13,color:"#64748B",fontWeight:600,paddingBottom:6 }}>
+      <input type="checkbox" checked={show2027Only} onChange={e=>setShow2027Only(e.target.checked)} style={{ width:18,height:18,accentColor:"#D97706",cursor:"pointer" }}/>
+      Bara 2027-plan
+    </label>
+  </div>
+
+  <div style={{ padding:"24px 0 0" }}><InfoBox/><BTModelsSection/></div>
+
+  <div style={{ fontSize:14,color:"#64748B",marginBottom:16 }}>Visar <strong style={{ color:"#1A202C",fontSize:18 }}>{filtered.length}</strong> av {REGIONS.length} regioner</div>
+
+  <div style={{ display:"flex",flexDirection:"column",gap:16 }}>
+    {filtered.map((r,i)=>(<div key={r.id}><RegionCard r={r} onNavigate={handleNavigate}/>{i===1&&<EmployerCTA/>}</div>))}
+  </div>
+  {filtered.length>4&&<EmployerCTA/>}
+
+  <div style={{ textAlign:"center",padding:"32px 20px 16px" }}>
+    <a href="https://forms.gle/xrczJD86A3PHwipV6" target="_blank" rel="noopener noreferrer" style={{ display:"inline-block",background:"#3B82F6",color:"#fff",padding:"14px 28px",borderRadius:10,fontSize:15,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 15px rgba(59,130,246,0.3)" }}>
+      💬 Ge oss din feedback — det tar bara 1 minut →
+    </a>
+    <p style={{ margin:"10px 0 0",fontSize:13,color:"#94A3B8" }}>Hjälp oss göra BT-guiden bättre för alla</p>
+  </div>
+
+  <div style={{ textAlign:"center",padding:"16px 20px 48px",fontSize:12,color:"#94A3B8",lineHeight:1.8 }}>
+    <div style={{ maxWidth:600,margin:"0 auto" }}><strong style={{color:"#64748B"}}>⚠️ Om datan</strong><br/>Siffrorna är uppskattningar baserade på offentliga uppgifter (regionernas hemsidor, Läkartidningen, Läkarförbundet, SYLF) och kan förändras. Insamlad mars 2026. Kontrollera alltid med respektive region. Sidan ersätter inte lokala riktlinjer eller aktuell information från din region.</div>
+  </div>
+</div>
+```
+
   </div>);
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<BTGuiden />);
-  </script>
+ReactDOM.createRoot(document.getElementById(‘root’)).render(<BTGuiden />);
+</script>
+
 </body>
 </html>
