@@ -126,9 +126,9 @@ function BTModelsSection() {
     </div>
     {cur ? <PathwayViz pathway={cur}/> : null}
     <div style={{ marginTop:20,padding:"12px 16px",borderRadius:10,background:"#F0FDF4",border:"1px solid #BBF7D0",fontSize:13,color:"#166534",lineHeight:1.6 }}>
-      <strong>Kom ihåg:</strong> All tjänstgöring efter legitimation kan tillgodoräknas i ST. BT-mål ska uppnås inom 2 år vid integrerad BT. Baskompetensbevis söks hos Socialstyrelsen när alla 18 delmål är uppfyllda.
+      <strong>Kom ihåg:</strong> Tidigare tjänstgöring under handledning kan i vissa fall tillgodoräknas i ST — men det innebär inte automatiskt att tiden förkortas. BT-mål ska uppnås inom 2 år vid integrerad BT. Baskompetensbevis söks hos Socialstyrelsen när alla 18 delmål är uppfyllda.
     </div>
-    <div style={{ marginTop:10,fontSize:11,color:"#94A3B8" }}>Modellerna är inspirerade av SYLF:s (Sveriges Yngre Läkares Förening) BT-modeller och Socialstyrelsens regelverk (HSLF-FS 2021:8). Visualiseringarna är våra egna.</div>
+    <div style={{ marginTop:10,fontSize:11,color:"#94A3B8" }}>Modellerna är inspirerade av SYLF:s BT-modeller och Socialstyrelsens regelverk (HSLF-FS 2021:8). Visualiseringarna och tidsfördelningen (antal månader per block) är våra egna uppskattningar — den faktiska fördelningen varierar mellan regioner och individer.</div>
   </div>);
 }
 
@@ -136,7 +136,7 @@ function BTModelsSection() {
 const TYPE_COLORS = { "Fristående":"#FB923C", "Integrerad":"#34D399", "Forskar-BT":"#A78BFA" };
 
 const REGIONS = [
-  { id:"stockholm", name:"Stockholm", pop:"2.4 milj", btTypes:["Fristående","Integrerad"], slotsNow:"~20/omgång (2 ggr/år)", slots2027:"Upp till 64/år (beslut taget)", hospitals:["Karolinska Huddinge","Karolinska Solna","Södersjukhuset","Danderyds sjukhus","S:t Görans sjukhus","Södertälje sjukhus","Norrtälje sjukhus","Vårdcentraler via SLSO"], placements:"Akut sjukvård, primärvård, psykiatri", recruitNow:"2 ggr/år: dec–jan (vår) och juni–juli (höst)", recruit2027:"Ännu ej publicerat", duration:"12 mån", contact:"slso.regionstockholm.se", source:"SLSO, Vårdgivarguiden", notes:"Fristående BT via SLSO. Integrerad BT söks direkt hos kliniken. Utökning till 64 platser/år beslutad.", perks:[], sponsored:false,
+  { id:"stockholm", name:"Stockholm", pop:"2.4 milj", btTypes:["Fristående","Integrerad"], slotsNow:"~20/omgång (2 ggr/år)", slots2027:"Upp till 64/år (enl. SLSO, ej formellt regionbeslut)", hospitals:["Karolinska Huddinge","Karolinska Solna","Södersjukhuset","Danderyds sjukhus","S:t Görans sjukhus","Södertälje sjukhus","Norrtälje sjukhus","Vårdcentraler via SLSO"], placements:"Akut sjukvård, primärvård, psykiatri", recruitNow:"2 ggr/år: dec–jan (vår) och juni–juli (höst)", recruit2027:"Ännu ej publicerat", duration:"12 mån", contact:"slso.regionstockholm.se", source:"SLSO, Vårdgivarguiden", notes:"Fristående BT via SLSO. Integrerad BT söks direkt hos kliniken. Uppgift om 64 platser/år från SLSO:s hemsida.", perks:[], sponsored:false,
     nearby:[
       { region:"Uppsala", direction:"norr", time:"~1 timme", highlight:"Akademiska sjukhuset — universitetssjukhus med 4v strukturerad intro" },
       { region:"Sörmland", direction:"söder", time:"~1 timme", highlight:"Nyköpings lasarett och Mälarsjukhuset Eskilstuna — integrerad BT i ST" },
@@ -162,7 +162,7 @@ const REGIONS = [
     ]},
   { id:"uppsala", name:"Uppsala", pop:"400 000", btTypes:["Fristående"], slotsNow:"Ej specificerat", slots2027:"Ej specificerat", hospitals:["Akademiska sjukhuset","BT-vårdcentraler i Uppsala län"], placements:"4v intro + primärvård + akut sjukvård + psykiatri", recruitNow:"2 ggr/år: v.6–8 och v.37–39", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Region Uppsala (BT-enheten)", source:"akademiska.se", notes:"4 veckors strukturerad intro. Central BT-enhet.", perks:[], sponsored:false,
     nearby:[
-      { region:"Stockholm", direction:"söder", time:"~1 timme", highlight:"SLSO regionala BT-programmet — upp till 64 platser/år 2027" },
+      { region:"Stockholm", direction:"söder", time:"~1 timme", highlight:"SLSO — utökning planeras (enl. SLSO)" },
       { region:"Dalarna", direction:"nordväst", time:"~2 timmar", highlight:"Falu lasarett — 12–24 fristående BT/år" },
       { region:"Sörmland", direction:"sydväst", time:"~1,5 timmar", highlight:"Mälarsjukhuset Eskilstuna — integrerad BT" },
     ]},
@@ -179,7 +179,7 @@ const REGIONS = [
   { id:"halland", name:"Halland", pop:"340 000", btTypes:["Fristående"], slotsNow:"2/omgång", slots2027:"Ej specificerat", hospitals:["Hallands sjukhus Halmstad","Hallands sjukhus Varberg"], placements:"Akut, primärvård, psykiatri", recruitNow:"Löpande", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Hallands sjukhus", source:"regionhalland.se", notes:"Inga tillgodoräknanden — kvalitet prioriteras.", perks:[], sponsored:false,
     nearby:[
       { region:"Västra Götaland", direction:"norr", time:"~1 timme", highlight:"Sahlgrenska + 5 andra sjukhus — 40 fristående BT" },
-      { region:"Skåne", direction:"söder", time:"~1 timme", highlight:"SUS Lund/Malmö — 240–300 platser planeras 2027" },
+      { region:"Skåne", direction:"söder", time:"~1 timme", highlight:"SUS Lund/Malmö — kraftig utökning väntas 2027" },
     ]},
   { id:"dalarna", name:"Dalarna", pop:"290 000", btTypes:["Fristående"], slotsNow:"12–24/år", slots2027:"Ej specificerat", hospitals:["Falu lasarett","Mora lasarett"], placements:"Akut, primärvård, psykiatri", recruitNow:"Löpande", recruit2027:"Ej publicerat", duration:"12 mån", contact:"BT-studierektor Dalarna", source:"Läkartidningen", notes:"Bland flest BT per invånare i landet.", perks:[], sponsored:false,
     nearby:[
@@ -191,7 +191,7 @@ const REGIONS = [
       { region:"Skåne", direction:"väster", time:"~1,5 timmar", highlight:"SUS + 6 andra sjukhus" },
       { region:"Kalmar", direction:"norr", time:"~2 timmar", highlight:"Länssjukhuset Kalmar — integrerad BT" },
     ]},
-  { id:"vasternorrland", name:"Västernorrland", pop:"245 000", btTypes:["Fristående"], slotsNow:"6–9/år", slots2027:"Ej specificerat", hospitals:["Sundsvalls sjukhus","Örnsköldsviks sjukhus","Sollefteå sjukhus"], placements:"Akut, primärvård, psykiatri", recruitNow:"Löpande", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Region Västernorrland", source:"Region Västernorrland", notes:null, perks:["5 000 kr/mån extra"], sponsored:false,
+  { id:"vasternorrland", name:"Västernorrland", pop:"245 000", btTypes:["Fristående"], slotsNow:"6–9/år", slots2027:"Ej specificerat", hospitals:["Sundsvalls sjukhus","Örnsköldsviks sjukhus","Sollefteå sjukhus"], placements:"Akut, primärvård, psykiatri", recruitNow:"Löpande", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Region Västernorrland", source:"Region Västernorrland", notes:"Lönetillägg om 5 000 kr/mån har rapporterats (källa: Läkartidningen) — verifiera med regionen.", perks:["5 000 kr/mån extra (obekräftat)"], sponsored:false,
     nearby:[
       { region:"Norrbotten", direction:"norr", time:"~3 timmar", highlight:"5 sjukhus — boende + pendling ingår" },
     ]},
@@ -204,7 +204,7 @@ const REGIONS = [
     nearby:[
       { region:"Östergötland", direction:"öster", time:"~1,5 timmar", highlight:"US Linköping — fristående + integrerad" },
       { region:"Västra Götaland", direction:"väster", time:"~1,5 timmar", highlight:"Sahlgrenska + 5 sjukhus — 40 BT 2026" },
-      { region:"Skåne", direction:"söder", time:"~2 timmar", highlight:"240–300 BT-platser planeras 2027" },
+      { region:"Skåne", direction:"söder", time:"~2 timmar", highlight:"SUS + 6 andra sjukhus — kraftig utökning väntas 2027" },
     ]},
   { id:"varmland", name:"Värmland", pop:"285 000", btTypes:["Integrerad"], slotsNow:"Behovsanpassat", slots2027:"Ej specificerat", hospitals:["Centralsjukhuset Karlstad","Torsby sjukhus"], placements:"Akut, primärvård, psykiatri", recruitNow:"Sök ST direkt", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Region Värmland", source:"Läkartidningen", notes:null, perks:[], sponsored:false,
     nearby:[
@@ -213,7 +213,7 @@ const REGIONS = [
     ]},
   { id:"sormland", name:"Sörmland", pop:"300 000", btTypes:["Integrerad"], slotsNow:"Behovsanpassat", slots2027:"Ej specificerat", hospitals:["Mälarsjukhuset Eskilstuna","Nyköpings lasarett","Kullbergska sjukhuset"], placements:"Akut, primärvård, psykiatri", recruitNow:"BT förutsätter ST-anställning", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Region Sörmland", source:"Läkartidningen", notes:null, perks:[], sponsored:false,
     nearby:[
-      { region:"Stockholm", direction:"norr", time:"~1 timme", highlight:"SLSO — upp till 64 BT/år 2027" },
+      { region:"Stockholm", direction:"norr", time:"~1 timme", highlight:"SLSO — utökning planeras (enl. SLSO)" },
       { region:"Östergötland", direction:"söder", time:"~1 timme", highlight:"US Linköping — fristående + integrerad" },
       { region:"Uppsala", direction:"nordväst", time:"~1,5 timmar", highlight:"Akademiska — fristående BT" },
     ]},
@@ -238,7 +238,7 @@ const REGIONS = [
     nearby:[
       { region:"Uppsala", direction:"norr", time:"~1 timme", highlight:"Akademiska — fristående BT" },
       { region:"Örebro", direction:"väster", time:"~1,5 timmar", highlight:"USÖ — fristående + integrerad BT" },
-      { region:"Stockholm", direction:"öster", time:"~1 timme", highlight:"SLSO — upp till 64 BT/år 2027" },
+      { region:"Stockholm", direction:"öster", time:"~1 timme", highlight:"SLSO — utökning planeras (enl. SLSO)" },
     ]},
   { id:"jamtland", name:"Jämtland Härjedalen", pop:"135 000", btTypes:["Integrerad"], slotsNow:"Behovsanpassat", slots2027:"Ej specificerat", hospitals:["Östersunds sjukhus"], placements:"Akut sjukvård, primärvård, psykiatri", recruitNow:"BT förutsätter ST-anställning", recruit2027:"Ej publicerat", duration:"12 mån", contact:"Region Jämtland Härjedalen", source:"Läkartidningen", notes:"Fjällnära. Enbart integrerad BT i nuläget.", perks:[], sponsored:false,
     nearby:[
@@ -345,7 +345,7 @@ function WhatIsBTSection() {
       text:"Du får legitimation direkt efter examen och ska göra BT som första del av din ST. Ingen AT behövs. Du är den första kullen — regionerna förbereder sig just nu för er.",
       next:"Nästa steg: Kolla fliken \"Hur ser BT ut?\" för att förstå strukturen, sedan \"Regioner\" för att jämföra var du vill söka." },
     { id:"gamla", emoji:"📚", label:"Gamla 5,5-åriga programmet", short:"Examen före 2027", color:"#60A5FA", bg:"#EFF6FF", border:"#BFDBFE",
-      text:"Du gör AT efter examen för att få legitimation, sedan ST. Du behöver inte göra BT. Sista AT-examen beräknas till ~2029, och AT erbjuds till ~2030.",
+      text:"Du gör AT efter examen för att få legitimation, sedan ST. Du behöver inte göra BT. Sista AT-examen beräknas till ~2029. Det finns inget nationellt beslut om när AT upphör, men den bedöms erbjudas till åtminstone ~2030 (källa: Läkartidningen, regionernas hemsidor).",
       next:"Den här sidan är främst för BT-sökande, men du kan använda regionprofilerna för att utforska sjukhus inför AT och framtida ST." },
     { id:"utland", emoji:"🌍", label:"Utbildad utanför Sverige", short:"EU/EES eller tredjeland", color:"#A78BFA", bg:"#FDF4FF", border:"#E9D5FF",
       text:"Efter svensk läkarlegitimation (via Socialstyrelsen) gör du BT som introduktion till svensk sjukvård, sedan ST. BT fungerar både som kompetensgrund och som en strukturerad väg in i det svenska systemet.",
@@ -413,7 +413,7 @@ function WhatIsBTSection() {
             <div>• Leder till <strong>läkarlegitimation</strong></div>
             <div>• 18–21 månader</div>
             <div>• Krävs efter 5,5-åriga programmet</div>
-            <div>• Fasas ut — sista examen 2029</div>
+            <div>• Fasas ut — sista examen beräknas ~2029</div>
             <div>• Minimitid ST efteråt: 5 år</div>
           </div>
         </div>
@@ -443,7 +443,7 @@ function WhatIsBTSection() {
           { region:"Västra Götaland", period:"v.16–18 (april) 2026", detail:"Start september 2026. 40 fristående platser.", urgent:true },
           { region:"Stockholm", period:"Juni–juli 2026", detail:"Via SLSO. Start höst 2026. ~20 platser/omgång.", urgent:false },
           { region:"Uppsala", period:"v.37–39 (sep) 2026", detail:"Nästa ansökningsperiod. 2 ggr/år.", urgent:false },
-          { region:"Stockholm", period:"Dec 2026 – jan 2027", detail:"Start vår 2027. Upp till 64 platser/år från 2027.", urgent:false },
+          { region:"Stockholm", period:"Dec 2026 – jan 2027", detail:"Start vår 2027. Utökning planeras (enl. SLSO).", urgent:false },
           { region:"Örebro", period:"2 ggr/år", detail:"Exakta datum varierar — bevaka regionens lediga jobb.", urgent:false },
           { region:"Dalarna", period:"Löpande", detail:"12–24 platser/år. Bland flest BT per invånare.", urgent:false },
           { region:"Norrbotten", period:"Löpande", detail:"Boende + pendlingsersättning ingår.", urgent:false },
@@ -462,7 +462,7 @@ function WhatIsBTSection() {
           </div>
         ); })}
       </div>
-      <div style={{ marginTop:12,fontSize:12,color:"#94A3B8",fontStyle:"italic" }}>Datumen är uppskattningar baserade på 2025/2026 års mönster. Kontrollera alltid med regionen.</div>
+      <div style={{ marginTop:12,fontSize:12,color:"#94A3B8",fontStyle:"italic" }}>Datumen är baserade på regionernas hemsidor och Läkartidningen (2025/2026). Vissa uppgifter har inte kunnat verifieras direkt med regionen. Kontrollera alltid aktuella datum på regionens egen hemsida.</div>
     </div>
 
     {/* Rekryteringsprocessen */}
@@ -493,7 +493,7 @@ function WhatIsBTSection() {
     <div style={{ background:"#fff",borderRadius:16,border:"1px solid #E2E8F0",padding:"28px",boxShadow:"0 1px 4px rgba(0,0,0,0.04)" }}>
       <h2 style={{ margin:"0 0 16px",fontSize:20,fontWeight:800,color:"#0F172A" }}>🔄 AT och BT — hur länge samexisterar de?</h2>
       <p style={{ margin:"0 0 12px",fontSize:15,lineHeight:1.8,color:"#475569" }}>
-        De två systemen kommer att finnas parallellt under flera år. Studenter på gamla programmet kan examineras till och med 2029, och AT beräknas erbjudas till ~2030. AT-läkare och BT-läkare kommer att arbeta sida vid sida på samma kliniker.
+        De två systemen kommer att finnas parallellt under flera år. Studenter på gamla programmet kan examineras till och med ~2029, och AT bedöms erbjudas till åtminstone ~2030 — men det finns inget nationellt beslut om ett slutdatum. AT-läkare och BT-läkare kommer att arbeta sida vid sida på samma kliniker.
       </p>
       <p style={{ margin:0,fontSize:15,lineHeight:1.8,color:"#475569" }}>
         Övergången sker successivt. Det finns inget slutdatum för AT — först blir BT-läkarna fler och fler, och till slut finns inga nya AT-läkare kvar i systemet.
@@ -624,7 +624,7 @@ function BTGuiden() {
       </div>
 
       <div style={{ textAlign:"center",padding:"16px 20px 48px",fontSize:12,color:"#94A3B8",lineHeight:1.8 }}>
-        <div style={{ maxWidth:600,margin:"0 auto" }}><strong style={{color:"#64748B"}}>⚠️ Om datan</strong><br/>Siffrorna är uppskattningar baserade på offentliga uppgifter (regionernas hemsidor, Läkartidningen, Läkarförbundet, SYLF) och kan förändras. Insamlad mars 2026. Kontrollera alltid med respektive region. Sidan ersätter inte lokala riktlinjer eller aktuell information från din region.</div>
+        <div style={{ maxWidth:600,margin:"0 auto" }}><strong style={{color:"#64748B"}}>⚠️ Om datan</strong><br/>Informationen är sammanställd från regionernas hemsidor, Läkartidningen, Läkarförbundet (SLF), SYLF och Socialstyrelsens föreskrifter (HSLF-FS 2021:8). Vissa uppgifter — särskilt antal platser, rekryteringsdatum och 2027-planer — har inte kunnat verifieras direkt med varje region och kan vara inaktuella. Siffrorna är uppskattningar och kan förändras. Senast uppdaterad mars 2026. Kontrollera alltid med respektive region. Sidan ersätter inte lokala riktlinjer.</div>
       </div>
     </div>
   </div>);
