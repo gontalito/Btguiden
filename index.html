@@ -534,6 +534,7 @@ function BTGuiden() {
     { id:"vadarbt", label:"Vad är BT?" },
     { id:"hurserbtut", label:"Hur ser BT ut?" },
     { id:"regioner", label:"Regioner" },
+    { id:"tjanster", label:"BT-tjänster" },
   ];
 
   return (<div style={{ minHeight:"100vh",background:"#F8FAFC",fontFamily:"'DM Sans',sans-serif" }}>
@@ -614,6 +615,57 @@ function BTGuiden() {
 
       {/* TAB: HUR SER BT UT? */}
       {tab==="hurserbtut" && (<div style={{ padding:"24px 0 0" }}><BTModelsSection/></div>)}
+
+      {/* TAB: BT-TJÄNSTER */}
+      {tab==="tjanster" && (<div style={{ padding:"24px 0 0",display:"flex",flexDirection:"column",gap:24 }}>
+        {/* Hero banner */}
+        <div style={{ background:"linear-gradient(135deg,#1E293B,#0F172A)",borderRadius:16,padding:"40px 32px",color:"#fff",position:"relative",overflow:"hidden",textAlign:"center" }}>
+          <div style={{ position:"absolute",top:-60,right:-60,width:200,height:200,background:"radial-gradient(circle,rgba(59,130,246,0.25) 0%,transparent 70%)",borderRadius:"50%" }}/>
+          <div style={{ position:"absolute",bottom:-60,left:-60,width:200,height:200,background:"radial-gradient(circle,rgba(251,191,36,0.15) 0%,transparent 70%)",borderRadius:"50%" }}/>
+          <div style={{ position:"relative" }}>
+            <div style={{ display:"inline-block",fontSize:11,fontWeight:800,color:"#FBBF24",background:"rgba(251,191,36,0.15)",padding:"6px 14px",borderRadius:6,textTransform:"uppercase",letterSpacing:2,marginBottom:16 }}>Kommer snart</div>
+            <h2 style={{ margin:"0 0 12px",fontSize:28,fontWeight:800,fontFamily:"'DM Serif Display',serif",lineHeight:1.2 }}>📢 Alla lediga BT-tjänster<br/>— samlat på ett ställe</h2>
+            <p style={{ margin:"0 auto 24px",fontSize:15,color:"#CBD5E1",lineHeight:1.7,maxWidth:560 }}>Sveriges första samlade BT-jobbportal. Vi samlar alla lediga BT-tjänster från alla 21 regioner så att du slipper leta på 21 olika hemsidor.</p>
+            <a href="https://forms.gle/xrczJD86A3PHwipV6" target="_blank" rel="noopener noreferrer" style={{ display:"inline-flex",alignItems:"center",gap:6,background:"#3B82F6",color:"#fff",padding:"14px 28px",borderRadius:10,fontSize:15,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 15px rgba(59,130,246,0.3)" }}>
+              🔔 Anmäl intresse — få mail vid lansering →
+            </a>
+            <p style={{ margin:"12px 0 0",fontSize:12,color:"#94A3B8" }}>Lanseras inför 2027 när första kullen från nya programmet examineras</p>
+          </div>
+        </div>
+
+        {/* Vad ingår */}
+        <div style={{ background:"#fff",borderRadius:16,border:"1px solid #E2E8F0",padding:"28px",boxShadow:"0 1px 4px rgba(0,0,0,0.04)" }}>
+          <h3 style={{ margin:"0 0 16px",fontSize:18,fontWeight:800,color:"#0F172A" }}>Vad kommer portalen innehålla?</h3>
+          <div style={{ display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:16 }}>
+            {[
+              ["🗺️","Alla 21 regioner","Fristående, integrerad och forskar-BT — alla samlade."],
+              ["🔍","Smart sökning","Filtrera på region, sjukhus, BT-typ och starttid."],
+              ["📅","Realtidsstatus","Öppen ansökan, sista ansökningsdag och starttid — alltid aktuellt."],
+              ["🏥","Sjukhusspecifikt","Se exakt vilken tjänstgöring som erbjuds på vilken ort."],
+              ["📧","Notifikationer","Få mail när nya tjänster i din favoritregion publiceras."],
+              ["⭐","Regionjämförelse","Jämför villkor, lön och förmåner sida vid sida."],
+            ].map(function(f){ return (
+              <div key={f[1]} style={{ padding:"16px 18px",borderRadius:10,background:"#F8FAFC",border:"1px solid #E2E8F0" }}>
+                <div style={{ fontSize:24,marginBottom:6 }}>{f[0]}</div>
+                <div style={{ fontSize:14,fontWeight:700,color:"#0F172A",marginBottom:4 }}>{f[1]}</div>
+                <div style={{ fontSize:13,color:"#64748B",lineHeight:1.5 }}>{f[2]}</div>
+              </div>
+            ); })}
+          </div>
+        </div>
+
+        {/* Tills dess */}
+        <div style={{ background:"#FFFBEB",borderRadius:16,border:"1px solid #FDE68A",padding:"24px 28px" }}>
+          <h3 style={{ margin:"0 0 10px",fontSize:16,fontWeight:800,color:"#92400E" }}>💡 Under tiden — så hittar du BT-tjänster idag</h3>
+          <p style={{ margin:"0 0 12px",fontSize:14,color:"#78350F",lineHeight:1.7 }}>Tills portalen lanseras kan du hitta aktuella tjänster direkt hos varje region:</p>
+          <ul style={{ margin:0,paddingLeft:20,fontSize:13,color:"#78350F",lineHeight:1.8 }}>
+            <li>Gå till fliken <strong>Regioner</strong> för kontaktinformation och annonseringsmönster</li>
+            <li>Varje regions hemsida har en <em>"Lediga jobb"</em>- eller <em>"Karriär"</em>-sida</li>
+            <li>Fristående BT utlyses oftast 2 gånger per år (vår och höst)</li>
+            <li>Bevaka Läkartidningens jobbsida och Arbetsförmedlingen</li>
+          </ul>
+        </div>
+      </div>)}
 
       {/* FEEDBACK + FOOTER (always visible) */}
       <div style={{ textAlign:"center",padding:"32px 20px 16px" }}>
