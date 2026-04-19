@@ -547,29 +547,30 @@ function BTGuiden() {
       <a href="https://forms.gle/xrczJD86A3PHwipV6" target="_blank" rel="noopener noreferrer" style={{ display:"inline-block",marginTop:4,color:"#92400E",fontSize:11,fontWeight:600,textDecoration:"underline" }}>Ge feedback →</a>
     </div>
 
-    <div style={{ background:"linear-gradient(135deg,#0F172A 0%,#1E293B 50%,#0F172A 100%)",padding:"28px 24px 16px",color:"#fff",position:"relative",overflow:"hidden" }}>
-      <div style={{ position:"absolute",top:-80,right:-80,width:300,height:300,background:"radial-gradient(circle,rgba(59,130,246,0.15) 0%,transparent 70%)",borderRadius:"50%" }}/>
+    <div style={{ background:"linear-gradient(135deg,#F1F5F9 0%,#E2E8F0 50%,#F1F5F9 100%)",padding:"32px 24px 20px",color:"#1E293B",position:"relative",overflow:"hidden",borderBottom:"1px solid #E2E8F0" }}>
+      <div style={{ position:"absolute",top:-80,right:-80,width:300,height:300,background:"radial-gradient(circle,rgba(147,197,253,0.25) 0%,transparent 70%)",borderRadius:"50%" }}/>
+      <div style={{ position:"absolute",bottom:-60,left:-60,width:240,height:240,background:"radial-gradient(circle,rgba(251,207,232,0.2) 0%,transparent 70%)",borderRadius:"50%" }}/>
       <div style={{ maxWidth:1100,margin:"0 auto",position:"relative" }}>
         <div style={{ display:"flex",alignItems:"center",gap:10,marginBottom:4 }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" strokeWidth="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          <span style={{ fontSize:11,fontWeight:600,color:"#60A5FA",textTransform:"uppercase",letterSpacing:2 }}>Sverige 2027</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span style={{ fontSize:11,fontWeight:600,color:"#3B82F6",textTransform:"uppercase",letterSpacing:2 }}>Sverige 2027</span>
         </div>
-        <h1 style={{ margin:"0 0 6px",fontSize:32,fontWeight:800,lineHeight:1.1,fontFamily:"'DM Serif Display',serif" }}>BT-guiden</h1>
-        <p style={{ margin:"0 0 12px",fontSize:14,color:"#94A3B8",lineHeight:1.5,maxWidth:600 }}>Alla regioners bastjänstgöringar — samlat, jämförbart och uppdaterat.</p>
-        <div style={{ display:"flex",gap:20,flexWrap:"wrap",marginBottom:16 }}>
-          {[[REGIONS.length+" regioner","📍"],[REGIONS.reduce(function(s,r){return s+r.hospitals.length},0)+" sjukhus/VC","🏥"]].map(function(item){return (<div key={item[0]} style={{ display:"flex",alignItems:"center",gap:6,fontSize:13,color:"#CBD5E1" }}><span style={{fontSize:16}}>{item[1]}</span>{item[0]}</div>)})}
+        <h1 style={{ margin:"0 0 6px",fontSize:34,fontWeight:800,lineHeight:1.1,fontFamily:"'DM Serif Display',serif",color:"#0F172A" }}>BT-guiden</h1>
+        <p style={{ margin:"0 0 14px",fontSize:14,color:"#64748B",lineHeight:1.5,maxWidth:600 }}>Sveriges enda BT-fokuserade portal — jämförelse, kontext och vägledning för framtida BT-läkare.</p>
+        <div style={{ display:"flex",gap:20,flexWrap:"wrap",marginBottom:20 }}>
+          {[[REGIONS.length+" regioner","📍"],[REGIONS.reduce(function(s,r){return s+r.hospitals.length},0)+" sjukhus/VC","🏥"]].map(function(item){return (<div key={item[0]} style={{ display:"flex",alignItems:"center",gap:6,fontSize:13,color:"#475569",fontWeight:500 }}><span style={{fontSize:16}}>{item[1]}</span>{item[0]}</div>)})}
         </div>
         {/* TAB BAR */}
-        <div style={{ display:"flex",gap:6,background:"rgba(255,255,255,0.06)",padding:4,borderRadius:12 }}>
+        <div style={{ display:"flex",gap:10,flexWrap:"wrap" }}>
           {tabs.map(function(t){ return (
             <button key={t.id} onClick={function(){ setTab(t.id); window.scrollTo({top:0,behavior:"smooth"}); }}
               style={{
-                flex:1,padding:"12px 6px",borderRadius:8,
-                border: tab===t.id ? "1.5px solid #3B82F6" : "1.5px solid transparent",
-                background: tab===t.id ? "#fff" : "transparent",
-                color: tab===t.id ? "#1D4ED8" : "rgba(255,255,255,0.5)",
-                fontSize:13,fontWeight:700,cursor:"pointer",letterSpacing:0.3,
-                boxShadow: tab===t.id ? "0 2px 8px rgba(0,0,0,0.12)" : "none",
+                flex:"1 1 auto",minWidth:120,padding:"12px 16px",borderRadius:10,
+                border: tab===t.id ? "1.5px solid #93C5FD" : "1.5px solid #E2E8F0",
+                background: tab===t.id ? "#fff" : "rgba(255,255,255,0.6)",
+                color: tab===t.id ? "#1D4ED8" : "#64748B",
+                fontSize:13,fontWeight:700,cursor:"pointer",letterSpacing:0.2,
+                boxShadow: tab===t.id ? "0 4px 12px rgba(59,130,246,0.15)" : "0 1px 3px rgba(0,0,0,0.04)",
                 transition:"all 0.15s",
               }}>
               {t.label}
@@ -619,31 +620,32 @@ function BTGuiden() {
       {/* TAB: BT-TJÄNSTER */}
       {tab==="tjanster" && (<div style={{ padding:"24px 0 0",display:"flex",flexDirection:"column",gap:24 }}>
         {/* Hero banner */}
-        <div style={{ background:"linear-gradient(135deg,#1E293B,#0F172A)",borderRadius:16,padding:"40px 32px",color:"#fff",position:"relative",overflow:"hidden",textAlign:"center" }}>
-          <div style={{ position:"absolute",top:-60,right:-60,width:200,height:200,background:"radial-gradient(circle,rgba(59,130,246,0.25) 0%,transparent 70%)",borderRadius:"50%" }}/>
-          <div style={{ position:"absolute",bottom:-60,left:-60,width:200,height:200,background:"radial-gradient(circle,rgba(251,191,36,0.15) 0%,transparent 70%)",borderRadius:"50%" }}/>
+        <div style={{ background:"linear-gradient(135deg,#F0F9FF 0%,#FDF4FF 50%,#FFFBEB 100%)",borderRadius:20,padding:"44px 32px",color:"#0F172A",position:"relative",overflow:"hidden",textAlign:"center",border:"1px solid #E2E8F0" }}>
+          <div style={{ position:"absolute",top:-60,right:-60,width:200,height:200,background:"radial-gradient(circle,rgba(147,197,253,0.35) 0%,transparent 70%)",borderRadius:"50%" }}/>
+          <div style={{ position:"absolute",bottom:-60,left:-60,width:200,height:200,background:"radial-gradient(circle,rgba(251,207,232,0.35) 0%,transparent 70%)",borderRadius:"50%" }}/>
           <div style={{ position:"relative" }}>
-            <div style={{ display:"inline-block",fontSize:11,fontWeight:800,color:"#FBBF24",background:"rgba(251,191,36,0.15)",padding:"6px 14px",borderRadius:6,textTransform:"uppercase",letterSpacing:2,marginBottom:16 }}>Kommer snart</div>
-            <h2 style={{ margin:"0 0 12px",fontSize:28,fontWeight:800,fontFamily:"'DM Serif Display',serif",lineHeight:1.2 }}>📢 Alla lediga BT-tjänster<br/>— samlat på ett ställe</h2>
-            <p style={{ margin:"0 auto 24px",fontSize:15,color:"#CBD5E1",lineHeight:1.7,maxWidth:560 }}>Sveriges första samlade BT-jobbportal. Vi samlar alla lediga BT-tjänster från alla 21 regioner så att du slipper leta på 21 olika hemsidor.</p>
-            <a href="https://forms.gle/xrczJD86A3PHwipV6" target="_blank" rel="noopener noreferrer" style={{ display:"inline-flex",alignItems:"center",gap:6,background:"#3B82F6",color:"#fff",padding:"14px 28px",borderRadius:10,fontSize:15,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 15px rgba(59,130,246,0.3)" }}>
+            <div style={{ display:"inline-block",fontSize:11,fontWeight:800,color:"#B45309",background:"rgba(251,191,36,0.2)",padding:"6px 14px",borderRadius:6,textTransform:"uppercase",letterSpacing:2,marginBottom:16 }}>Kommer snart</div>
+            <h2 style={{ margin:"0 0 12px",fontSize:28,fontWeight:800,fontFamily:"'DM Serif Display',serif",lineHeight:1.2,color:"#0F172A" }}>📢 Alla lediga BT-tjänster<br/>— samlat på ett ställe</h2>
+            <p style={{ margin:"0 auto 24px",fontSize:15,color:"#64748B",lineHeight:1.7,maxWidth:560 }}>Sveriges enda BT-fokuserade portal — med jämförelse, kontext och vägledning. Inte bara en annonslista.</p>
+            <a href="https://forms.gle/xrczJD86A3PHwipV6" target="_blank" rel="noopener noreferrer" style={{ display:"inline-flex",alignItems:"center",gap:6,background:"#3B82F6",color:"#fff",padding:"14px 28px",borderRadius:10,fontSize:15,fontWeight:700,textDecoration:"none",boxShadow:"0 4px 20px rgba(59,130,246,0.25)" }}>
               🔔 Anmäl intresse — få mail vid lansering →
             </a>
-            <p style={{ margin:"12px 0 0",fontSize:12,color:"#94A3B8" }}>Lanseras inför 2027 när första kullen från nya programmet examineras</p>
+            <p style={{ margin:"14px 0 0",fontSize:12,color:"#94A3B8" }}>Lanseras inför 2027 när första kullen från nya programmet examineras</p>
           </div>
         </div>
 
         {/* Vad ingår */}
         <div style={{ background:"#fff",borderRadius:16,border:"1px solid #E2E8F0",padding:"28px",boxShadow:"0 1px 4px rgba(0,0,0,0.04)" }}>
-          <h3 style={{ margin:"0 0 16px",fontSize:18,fontWeight:800,color:"#0F172A" }}>Vad kommer portalen innehålla?</h3>
+          <h3 style={{ margin:"0 0 6px",fontSize:18,fontWeight:800,color:"#0F172A" }}>Varför BT-guiden?</h3>
+          <p style={{ margin:"0 0 16px",fontSize:13,color:"#64748B",lineHeight:1.6 }}>Det finns generella läkarjobb-sajter där BT är en filter bland tusentals andra annonser. BT-guiden gör något annat:</p>
           <div style={{ display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:16 }}>
             {[
-              ["🗺️","Alla 21 regioner","Fristående, integrerad och forskar-BT — alla samlade."],
-              ["🔍","Smart sökning","Filtrera på region, sjukhus, BT-typ och starttid."],
-              ["📅","Realtidsstatus","Öppen ansökan, sista ansökningsdag och starttid — alltid aktuellt."],
-              ["🏥","Sjukhusspecifikt","Se exakt vilken tjänstgöring som erbjuds på vilken ort."],
-              ["📧","Notifikationer","Få mail när nya tjänster i din favoritregion publiceras."],
-              ["⭐","Regionjämförelse","Jämför villkor, lön och förmåner sida vid sida."],
+              ["🎯","100% BT-fokus","Ingen ST, ingen specialistvård, inga vikariat. Bara BT — alla 21 regioner samlade."],
+              ["⚖️","Jämförelse sida vid sida","Jämför lön, placeringar, handledning och schema mellan regioner."],
+              ["🧭","Vägledning, inte bara länkar","\"Välj din situation\", BT-modeller per specialitet, ansökningskalender."],
+              ["🏥","Sjukhusspecifik kontext","Se exakt var tjänsten utförs — inte bara \"Region X\"."],
+              ["🤝","Oberoende","Byggd av läkare för läkare. Ingen region styr innehållet."],
+              ["📅","Ansökningsöversikt","Alla deadlines och rekryteringsperioder samlade på ett ställe."],
             ].map(function(f){ return (
               <div key={f[1]} style={{ padding:"16px 18px",borderRadius:10,background:"#F8FAFC",border:"1px solid #E2E8F0" }}>
                 <div style={{ fontSize:24,marginBottom:6 }}>{f[0]}</div>
